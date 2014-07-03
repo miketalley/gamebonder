@@ -12,8 +12,13 @@
         <!-- Show source search results -->
         <div ng-hide="sourceSelected">
           Results:
-          <div ng-repeat="source in sourceList">
+          <div ng-repeat="source in sourceList | startFrom: sourcePage * pageSize | limitTo: 5">
             <a href ng-click='selectSource(source)'>{{source.name}} - {{source.appid}}</a>
+          </div>
+          <div class='pull-right btn-group' ng-show='sourcePageCount'>
+            <button ng-disabled='sourcePage == 0' ng-click='sourcePage = sourcePage - 1'>Previous</button>
+            {{sourcePage + 1}}/{{sourcePageCount + 1}}
+            <button ng-disabled='sourcePage == sourcePageCount' ng-click='sourcePage = sourcePage + 1'>Next</button>
           </div>
         </div>
 
@@ -36,7 +41,7 @@
         <!-- Show target search results -->
         <div ng-hide="targetSelected">
           Results:
-          <div ng-repeat="target in targetList">
+          <div ng-repeat="target in targetList | range:targetPage:targetPageSize">
             <a href ng-click='selectTarget(target)'>{{target.name}} - {{target.appid}}</a>
           </div>
         </div>
