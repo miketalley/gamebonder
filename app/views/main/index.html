@@ -1,0 +1,67 @@
+<body>
+  <div class='container'>
+  <div x-ng-controller="GamesController">
+    <div class='row'>
+
+      <!-- Source -->
+      <div class="col-md-5">
+        <h3>Game to Bond</h3>
+        <input type='text' ng-model='sourceSearch'>
+        <button ng-click='searchList(sourceSearch, "source")'>Search Sources</button>
+
+        <!-- Show source search results -->
+        <div ng-hide="sourceSelected">
+          Results:
+          <div ng-repeat="source in sourceList">
+            <a href ng-click='selectSource(source)'>{{source.name}} - {{source.appid}}</a>
+          </div>
+        </div>
+
+        <!-- Show source when selected -->
+        <div ng-show='sourceSelected'>
+          <div>
+            Selected Source:
+            <p>{{source.name}} - {{source.appid}}</p>
+            <button ng-click="cancelSource()">Cancel Source</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Target -->
+      <div class="col-md-5">
+        <h3>Game to Associate</h3>
+        <input type='text' ng-model='targetSearch'>
+        <button ng-click='searchList(targetSearch, "target")'>Search Targets</button>
+
+        <!-- Show target search results -->
+        <div ng-hide="targetSelected">
+          Results:
+          <div ng-repeat="target in targetList">
+            <a href ng-click='selectTarget(target)'>{{target.name}} - {{target.appid}}</a>
+          </div>
+        </div>
+
+        <!-- Show target when selected -->
+        <div ng-show='targetSelected'>
+          <div>
+            Selected Target:
+            <p>{{target.name}} - {{target.appid}}</p>
+            <button ng-click="cancelTarget()">Cancel Target</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='row'>
+      <div class='col-md-8' ng-show='sourceSelected && targetSelected'>
+        <div class='input-group input-group-sm'>
+          Bond Description:
+          <input type='text' ng-model='bondDescription'>
+        </div>
+        <button ng-click='newBond(source, target, bondDescription)'>Submit</button>
+      </div>
+    </div><!-- Close Row -->
+  </div><!-- Close Controller -->
+  </div><!-- Close Container -->
+</body>
+
