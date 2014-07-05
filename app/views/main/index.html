@@ -10,12 +10,12 @@
         <button ng-click='searchList(sourceSearch, "source")'>Search Sources</button>
 
         <!-- Show source search results -->
-        <div ng-hide="sourceSelected">
+        <div ng-hide="sourceSelected" id='source-search'>
           Results:
           <div ng-repeat="source in sourceList | startFrom: sourcePage * pageSize | limitTo: 5">
             <a href ng-click='selectSource(source)'>{{source.name}} - {{source.appid}}</a>
           </div>
-          <div class='pull-right btn-group' ng-show='sourcePageCount'>
+          <div class='pull-right btn-group' id='source-search-buttons' ng-show='sourcePageCount'>
             <button ng-disabled='sourcePage == 0' ng-click='sourcePage = sourcePage - 1'>Previous</button>
             {{sourcePage + 1}}/{{sourcePageCount + 1}}
             <button ng-disabled='sourcePage == sourcePageCount' ng-click='sourcePage = sourcePage + 1'>Next</button>
@@ -39,10 +39,15 @@
         <button ng-click='searchList(targetSearch, "target")'>Search Targets</button>
 
         <!-- Show target search results -->
-        <div ng-hide="targetSelected">
+        <div ng-hide="targetSelected" id='target-search'>
           Results:
-          <div ng-repeat="target in targetList | range:targetPage:targetPageSize">
+          <div ng-repeat="target in targetList | startFrom: targetPage * pageSize | limitTo: 5">
             <a href ng-click='selectTarget(target)'>{{target.name}} - {{target.appid}}</a>
+          </div>
+          <div class='pull-right btn-group' id='target-search-buttons' ng-show='targetPageCount'>
+            <button ng-disabled='targetPage == 0' ng-click='targetPage = targetPage - 1'>Previous</button>
+            {{targetPage + 1}}/{{targetPageCount + 1}}
+            <button ng-disabled='targetPage == targetPageCount' ng-click='targetPage = targetPage + 1'>Next</button>
           </div>
         </div>
 

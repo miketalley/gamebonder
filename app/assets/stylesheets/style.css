@@ -1,0 +1,16 @@
+#source-search-buttons {
+  position: fixed;
+}
+
+#target-search-buttons {
+  position: absolute;
+}
+
+#source-search {
+  height: 100%;
+  overflow: auto;
+}
+
+#target-search {
+  min-height: 250px;
+}

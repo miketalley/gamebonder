@@ -48,6 +48,7 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
     }
     else{
       $scope.targetList = gamesList.filter(searchMatch);
+      $scope.targetPageCount = Math.floor($scope.targetList.length / $scope.pageSize);
       // return targetList;
     }
   };
