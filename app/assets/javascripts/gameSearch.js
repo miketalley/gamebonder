@@ -2,27 +2,37 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
 .controller('GamesController', ['$scope', '$http', '$location', '$q', function($scope, $http, $location, $q, listActive, listPageCount){
   $scope.pageSize = 5;
 
-  // Checks if bond already exists in DB
-  var bondExists = function(source, target) {
+  // Returns T/F if object already exists in DB
+  var existsInDB = function(objectType, object) {
+    var foundIt = false;
     var response;
-    $http({
-      url: '../../bonds.json',
-      method: 'GET'
-      // beforeSend: function(xhr){
-      //   xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
-      // }
-    })
-    .success(function(data){
-      for(var i = 0; i < data.length; i++){
-        if(data[i].source.id === source.id){
-          if(data[i].target.id === target.id){
-            response = data[i];
+    var defer = $q.defer();
+
+    $http.get('../../' + objectType + '.json')
+      .success(function(data){
+        defer.resolve(data);
+      })
+      .error(function(){
+        defer.reject('Error - Barfed');
+      });
+
+    response = defer.promise;
+
+    response.then(function(results){
+      angular.forEach(results, function(result){
+        if(object.isArray()){
+          if(result.source_id === object[0].id && result.target_id === object[1].id){
+            foundIt = true;
           }
         }
-        response = false;
-      }
+        else{
+          if(result.id === object.id){
+            foundIt = true;
+          }
+        }
+      });
     });
-    return response;
+    return foundIt;
   };
 
   // Adds a bond between two games to DB
@@ -45,42 +55,47 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
   // Once complete, calls bondGames to create bond
   var addSourceAndTarget = function(games){
     var gamePosts = [];
+    var resultsArray = [];
 
     angular.forEach(games, function(game) {
-      gamePosts.push(
-        $http({
-          url: '../../games.json',
-          method: "POST",
-          dataType: 'json',
-          data: {
-            game: {
-              name: game.name,
-              giant_bomb_id: game.id,
-              icon_url: game.image.icon_url
+      var foundGame = existsInDB('game', game);
+
+      if(!foundGame){
+        gamePosts.push(
+          $http({
+            url: '../../games.json',
+            method: "POST",
+            dataType: 'json',
+            data: {
+              game: {
+                name: game.name,
+                giant_bomb_id: game.id,
+                icon_url: game.image.icon_url
+              }
             }
-          }
-        })
-      );
+          })
+        );
+      }
+      else{
+        resultsArray.push(gameToPush);
+      }
     });
 
     $q.all(gamePosts)
     .then(
       function(results){
-        var resultsArray = [];
-
         angular.forEach(results, function(result){
           resultsArray.push(result.data);
         });
-
-        bondGames(resultsArray);
       }
     );
+    bondGames(resultsArray);
   };
 
 
   $scope.newBond = function(source, target, description){
     var sourceAndTarget = [source, target];
-    var bond = bondExists(source, target);
+    var bond = existsInDB('bond', sourceAndTarget);
 
     if(bond){
       bond.strength = bond.strength + 1;
