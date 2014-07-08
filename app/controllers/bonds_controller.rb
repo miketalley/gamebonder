@@ -1,10 +1,12 @@
 class BondsController < ApplicationController
   before_action :set_bond, only: [:show, :edit, :update, :destroy]
+  skip_before_filter  :verify_authenticity_token
 
   # GET /bonds
   # GET /bonds.json
   def index
     @bonds = Bond.all
+    render json: @bonds
   end
 
   # GET /bonds/1
@@ -24,16 +26,12 @@ class BondsController < ApplicationController
   # POST /bonds
   # POST /bonds.json
   def create
-    @bond = Bond.new(bond_params)
+    @bond = Bond.create(bond_params)
 
-    respond_to do |format|
-      if @bond.save
-        format.html { redirect_to @bond, notice: 'Bond was successfully created.' }
-        format.json { render :show, status: :created, location: @bond }
-      else
-        format.html { render :new }
-        format.json { render json: @bond.errors, status: :unprocessable_entity }
-      end
+    if @bond.save
+      render json: @bond
+    else
+      render json: @bond.errors, status: :unprocessable_entity
     end
   end
 
@@ -69,6 +67,6 @@ class BondsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def bond_params
-      params[:bond]
+      params.require(:bond).permit(:source_id, :target_id, :strength)
     end
 end

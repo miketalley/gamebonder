@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  resources :reasons
+  resources :games
 
-  resources :nodes
+  resources :reasons
 
   resources :bonds
 

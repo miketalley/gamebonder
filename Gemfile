@@ -5,6 +5,8 @@ gem 'd3-rails'
 gem 'puma'
 gem 'bootstrap-sass'
 gem 'rails_12factor'
+gem 'jquery-turbolinks'
+gem 'pry-rails'
 
 
 

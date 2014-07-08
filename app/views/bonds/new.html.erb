@@ -14,7 +14,7 @@
         <div ng-hide="sourceSelected" id='source-search'>
           Results:
           <div ng-repeat="source in sourceList | startFrom: sourcePage * pageSize | limitTo: 5">
-            <a href ng-click='selectSource(source)'>{{source.name}} - {{source.appid}}</a>
+            <img src="{{source.image.icon_url}}"><a href ng-click='selectSource(source)'>{{source.name}} - {{source.id}}</a>
           </div>
           <div class='pull-right btn-group' id='source-search-buttons' ng-show='sourcePageCount'>
             <button ng-disabled='sourcePage == 0' ng-click='sourcePage = sourcePage - 1'>Previous</button>
@@ -27,7 +27,8 @@
         <div ng-show='sourceSelected'>
           <div>
             Selected Source:
-            <p>{{source.name}} - {{source.appid}}</p>
+            <img src="{{source.image.icon_url}}">
+            <p><a href="{{source.site_detail_url}}" target='_blank'>{{source.name}}</a> - {{source.id}}</p>
             <button ng-click="cancelSource()">Cancel Source</button>
           </div>
         </div>
@@ -43,7 +44,7 @@
         <div ng-hide="targetSelected" id='target-search'>
           Results:
           <div ng-repeat="target in targetList | startFrom: targetPage * pageSize | limitTo: 5">
-            <a href ng-click='selectTarget(target)'>{{target.name}} - {{target.appid}}</a>
+            <img src='{{target.image.icon_url}}'><a href ng-click='selectTarget(target)'>{{target.name}} - {{target.id}}</a>
           </div>
           <div class='pull-right btn-group' id='target-search-buttons' ng-show='targetPageCount'>
             <button ng-disabled='targetPage == 0' ng-click='targetPage = targetPage - 1'>Previous</button>
@@ -56,7 +57,8 @@
         <div ng-show='targetSelected'>
           <div>
             Selected Target:
-            <p>{{target.name}} - {{target.appid}}</p>
+            <img src='{{target.image.icon_url}}'>
+            <p><a href='{{target.site_detail_url}}' target='_blank'>{{target.name}}</a> - {{target.id}}</p>
             <button ng-click="cancelTarget()">Cancel Target</button>
           </div>
         </div>
@@ -72,6 +74,7 @@
         <button ng-click='newBond(source, target, bondDescription)'>Submit</button>
       </div>
     </div><!-- Close Row -->
+    </div>
   </div><!-- Close Controller -->
   </div><!-- Close Container -->
 
