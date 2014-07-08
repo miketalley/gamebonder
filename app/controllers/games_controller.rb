@@ -25,12 +25,20 @@ class GamesController < ApplicationController
   # POST /games
   # POST /games.json
   def create
-    @game = Game.new(game_params)
+    @game = Game.new(
+      id: game_params["giant_bomb_id"],
+      name: game_params["name"],
+      icon_url: game_params["icon_url"]
+      )
 
-    if @game.save
-      render json: @game
-    else
-      render json: @game.errors, status: :unprocessable_entity
+    respond_to do |format|
+      if @game.save
+        format.html { redirect_to @game, notice: 'Game was successfully added.' }
+        format.json { render :show, status: :ok, location: @game }
+      else
+        format.html { render :edit }
+        format.json { render json: @game.errors, status: :unprocessable_entity }
+      end
     end
   end
 

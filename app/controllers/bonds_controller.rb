@@ -28,10 +28,14 @@ class BondsController < ApplicationController
   def create
     @bond = Bond.create(bond_params)
 
-    if @bond.save
-      render json: @bond
-    else
-      render json: @bond.errors, status: :unprocessable_entity
+    respond_to do |format|
+      if @bond.save
+        format.html { redirect_to @bond, notice: 'Bond was successfully added.' }
+        format.json { render :show, status: :ok, location: @bond }
+      else
+        format.html { render :edit }
+        format.json { render json: @bond.errors, status: :unprocessable_entity }
+      end
     end
   end
 

@@ -1,21 +1,21 @@
 var gamesApp = angular.module('gamesApp', ['customFilters'])
 .controller('GamesController', ['$scope', '$http', '$location', '$q', function($scope, $http, $location, $q, listActive, listPageCount){
   $scope.pageSize = 5;
-  var newSource;
-  var newTarget;
 
+  // Checks if bond already exists in DB
   var bondExists = function(source, target) {
     var response;
     $http({
-      url: '../../bonds',
-      method: 'GET',
-      beforeSend: function(xhr){
-        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
-      }
-    }).success(function(data){
+      url: '../../bonds.json',
+      method: 'GET'
+      // beforeSend: function(xhr){
+      //   xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+      // }
+    })
+    .success(function(data){
       for(var i = 0; i < data.length; i++){
-        if(data.source === source){
-          if(data.target === target){
+        if(data[i].source.id === source.id){
+          if(data[i].target.id === target.id){
             response = data[i];
           }
         }
@@ -25,9 +25,10 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
     return response;
   };
 
-  bondGames = function(newSourceAndTarget){
+  // Adds a bond between two games to DB
+  var bondGames = function(newSourceAndTarget){
     $http({
-      url: '../../bonds',
+      url: '../../bonds.json',
       method: "POST",
       dataType: 'json',
       data: {
@@ -40,14 +41,15 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
     });
   };
 
+  // Adds Source and Target games to DB
+  // Once complete, calls bondGames to create bond
   var addSourceAndTarget = function(games){
-    // var deferred = $q.defer();
     var gamePosts = [];
 
     angular.forEach(games, function(game) {
       gamePosts.push(
         $http({
-          url: '../../games',
+          url: '../../games.json',
           method: "POST",
           dataType: 'json',
           data: {
@@ -77,7 +79,6 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
 
 
   $scope.newBond = function(source, target, description){
-    // var newSourceAndTarget;
     var sourceAndTarget = [source, target];
     var bond = bondExists(source, target);
 
