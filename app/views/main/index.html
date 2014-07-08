@@ -1,77 +1,14 @@
 <body>
   <div class='container'>
-  <div x-ng-controller="GamesController">
     <div class='row'>
-
-      <!-- Source -->
-      <div class="col-md-5">
-        <h3>Game to Bond</h3>
-        <input type='text' ng-model='sourceSearch'>
-        <button ng-click='searchList(sourceSearch, "source")'>Search Sources</button>
-
-        <!-- Show source search results -->
-        <div ng-hide="sourceSelected" id='source-search'>
-          Results:
-          <div ng-repeat="source in sourceList | startFrom: sourcePage * pageSize | limitTo: 5">
-            <a href ng-click='selectSource(source)'>{{source.name}} - {{source.appid}}</a>
-          </div>
-          <div class='pull-right btn-group' id='source-search-buttons' ng-show='sourcePageCount'>
-            <button ng-disabled='sourcePage == 0' ng-click='sourcePage = sourcePage - 1'>Previous</button>
-            {{sourcePage + 1}}/{{sourcePageCount + 1}}
-            <button ng-disabled='sourcePage == sourcePageCount' ng-click='sourcePage = sourcePage + 1'>Next</button>
-          </div>
-        </div>
-
-        <!-- Show source when selected -->
-        <div ng-show='sourceSelected'>
-          <div>
-            Selected Source:
-            <p>{{source.name}} - {{source.appid}}</p>
-            <button ng-click="cancelSource()">Cancel Source</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Target -->
-      <div class="col-md-5">
-        <h3>Game to Associate</h3>
-        <input type='text' ng-model='targetSearch'>
-        <button ng-click='searchList(targetSearch, "target")'>Search Targets</button>
-
-        <!-- Show target search results -->
-        <div ng-hide="targetSelected" id='target-search'>
-          Results:
-          <div ng-repeat="target in targetList | startFrom: targetPage * pageSize | limitTo: 5">
-            <a href ng-click='selectTarget(target)'>{{target.name}} - {{target.appid}}</a>
-          </div>
-          <div class='pull-right btn-group' id='target-search-buttons' ng-show='targetPageCount'>
-            <button ng-disabled='targetPage == 0' ng-click='targetPage = targetPage - 1'>Previous</button>
-            {{targetPage + 1}}/{{targetPageCount + 1}}
-            <button ng-disabled='targetPage == targetPageCount' ng-click='targetPage = targetPage + 1'>Next</button>
-          </div>
-        </div>
-
-        <!-- Show target when selected -->
-        <div ng-show='targetSelected'>
-          <div>
-            Selected Target:
-            <p>{{target.name}} - {{target.appid}}</p>
-            <button ng-click="cancelTarget()">Cancel Target</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class='row'>
-      <div class='col-md-8' ng-show='sourceSelected && targetSelected'>
-        <div class='input-group input-group-sm'>
-          Bond Description:
-          <input type='text' ng-model='bondDescription'>
-        </div>
-        <button ng-click='newBond(source, target, bondDescription)'>Submit</button>
-      </div>
+    <h1>Welcome to Game Bonder!</h1>
+    Menu
+    <ul>
+      <li><a href='/bonds'>Bonds List</a></li>
+      <li><a href='/games'>Games List</a></li>
+      <li><a href='/bonds/new'>New Bond</a></li>
+    </ul>
     </div><!-- Close Row -->
-  </div><!-- Close Controller -->
   </div><!-- Close Container -->
 </body>
 
