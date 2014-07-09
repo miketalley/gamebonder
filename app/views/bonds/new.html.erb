@@ -13,8 +13,10 @@
         <!-- Show source search results -->
         <div ng-hide="sourceSelected" id='source-search'>
           Results:
-          <div ng-repeat="source in sourceList | startFrom: sourcePage * pageSize | limitTo: 5">
-            <img src="{{source.image.icon_url}}"><a href ng-click='selectSource(source)'>{{source.name}} - {{source.id}}</a>
+          <div id='sourceResults'>
+            <div ng-repeat="source in sourceList | startFrom: sourcePage * pageSize | limitTo: 5">
+              <img src="{{source.image.icon_url}}" height='80' width='80'><a href ng-click='selectSource(source)'>{{source.name}} - {{source.id}}</a>
+            </div>
           </div>
           <div class='pull-right btn-group' id='source-search-buttons' ng-show='sourcePageCount'>
             <button ng-disabled='sourcePage == 0' ng-click='sourcePage = sourcePage - 1'>Previous</button>
@@ -44,8 +46,10 @@
         <!-- Show target search results -->
         <div ng-hide="targetSelected" id='target-search'>
           Results:
-          <div ng-repeat="target in targetList | startFrom: targetPage * pageSize | limitTo: 5">
-            <img src='{{target.image.icon_url}}'><a href ng-click='selectTarget(target)'>{{target.name}} - {{target.id}}</a>
+          <div id='targetResults'>
+            <div ng-repeat="target in targetList | startFrom: targetPage * pageSize | limitTo: 5">
+              <img src='{{target.image.icon_url}}' height='80' width='80'><a href ng-click='selectTarget(target)'>{{target.name}} - {{target.id}}</a>
+            </div>
           </div>
           <div class='pull-right btn-group' id='target-search-buttons' ng-show='targetPageCount'>
             <button ng-disabled='targetPage == 0' ng-click='targetPage = targetPage - 1'>Previous</button>
