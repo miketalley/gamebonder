@@ -71,9 +71,9 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
           }
         });
       }
+    }).then(function(){
+      return returnValue;
     });
-
-    return returnValue;
   };
 
 
