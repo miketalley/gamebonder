@@ -6,15 +6,6 @@
   position: absolute;
 }
 
-#source-search {
-  height: ;
-  overflow: auto;
-}
-
-#target-search {
-  min-height: 250px;
-}
-
 #sourceResults {
   height: 400px;
 }
