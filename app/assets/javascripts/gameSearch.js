@@ -62,36 +62,48 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
   };
 
   var bondExists = function(bondList, source, target){
-    var returnValue;
+    var foundBond;
 
     console.log('Searching for bond between...' + source.name + ' & ' + target.name);
     angular.forEach(bondList, function(bond){
       if(bond.source_id === source.id && bond.target_id === target.id){
-        returnValue = bond;
+        foundBond = bond;
       }
     });
 
-    return returnValue;
+    return foundBond;
   };
 
 
   var gameExists = function(gamesList, gameToFind){
-    var returnValue = false;
+    var foundGame = false;
 
     console.log('Searching for game...' + gameToFind.name);
     angular.forEach(gamesList, function(game){
       if(game.id === gameToFind.id){
-          returnValue = true;
+          foundGame = true;
       }
     });
 
-    return returnValue;
+    return foundGame;
+  };
+
+  var reasonExists = function(reasons, description){
+    var foundReason;
+
+    angular.forEach(reasons, function(reason){
+      if(reason.description === description){
+        foundReason = reason;
+      }
+    });
+
+    return foundReason;
   };
 
 
   // Adds a bond between two games to DB
   var bondGames = function(source, target){
-    var gamesPosted;
+    var gamesPosted, newBond;
 
     console.log('Running bondGames...');
     console.log('SourceID: ' + source.id);
@@ -104,10 +116,7 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
 
     gamesPosted = postDB('bonds', bond);
 
-    gamesPosted
-    .then(function(result){
-      console.log('Bond Added! ID: ' + result.id);
-    });
+    return gamesPosted.promise;
   };
 
   // Adds Source and Target games to DB
@@ -129,7 +138,7 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
     })
     .then(function(){
       if(foundSource && foundTarget){
-      bondGames(source, target);
+        // bondGames(source, target);
       }
       else if(!foundSource && foundTarget){
         postSource = {
@@ -138,7 +147,7 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
             icon_url: source.image.icon_url
           };
         postDB('games', postSource);
-        bondGames(source, target);
+        // bondGames(source, target);
       }
       else if(foundSource && !foundTarget){
         postTarget = {
@@ -147,7 +156,7 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
             icon_url: source.image.icon_url
           };
         postDB('games', postTarget);
-        bondGames(source, target);
+        // bondGames(source, target);
       }
       else{
         postSource = {
@@ -163,7 +172,33 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
             icon_url: source.image.icon_url
           };
         postDB('games', postTarget);
-        bondGames(source, target);
+        // bondGames(source, target);
+      }
+    });
+  };
+
+  var addReason = function(bond, description){
+    var getReasonsDB;
+    var reasonFound;
+    var reason = {
+      description: description,
+      bond_id: bond.id
+    };
+
+    getReasonsDB = getDB('reasons');
+
+    getReasonsDB.then(function(results){
+      reasonFound = reasonExists(results.data, description);
+    })
+    .then(function(){
+      if(reasonFound){
+        reasonFound.strength++;
+        console.log('Reason ID: ' + reasonFound.id + ' Strength: ' + reasonFound.strength);
+        putDB('reasons', reasonFound);
+      }
+      else{
+        postDB('reasons', reason);
+        console.log('Reason not found... adding');
       }
     });
   };
@@ -171,7 +206,7 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
 
   $scope.newBond = function(source, target, description){
     var getBondDB = getDB('bonds');
-    var bondFound;
+    var bondFound, newBond, bondAdded;
 
     getBondDB
     .then(function(results){
@@ -183,9 +218,20 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
         bondFound.strength++;
         console.log('Bond ID: ' + bondFound.id + ' Strength: ' + bondFound.strength);
         putDB('bonds', bondFound);
+        addReason(bondFound, description);
       }
       else {
         addGames(source, target);
+        bondAdded = bondGames(source, target);
+
+        bondAdded
+        .then(function(result){
+          console.log('Bond Added! ID: ' + result.id);
+           newBond = result;
+        })
+        .then(function(){
+          addReason(newBond, description);
+        });
       }
     });
   };
