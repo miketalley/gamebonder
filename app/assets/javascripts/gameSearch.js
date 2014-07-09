@@ -116,7 +116,7 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
 
     gamesPosted = postDB('bonds', bond);
 
-    return gamesPosted.promise;
+    return gamesPosted;
   };
 
   // Adds Source and Target games to DB
@@ -138,9 +138,11 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
     })
     .then(function(){
       if(foundSource && foundTarget){
+        console.log('Found: Source & Target');
         // bondGames(source, target);
       }
       else if(!foundSource && foundTarget){
+        console.log('Found: !Source & Target');
         postSource = {
             name: source.name,
             giant_bomb_id: source.id,
@@ -150,6 +152,7 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
         // bondGames(source, target);
       }
       else if(foundSource && !foundTarget){
+        console.log('Found: Source & !Target');
         postTarget = {
             name: source.name,
             giant_bomb_id: source.id,
@@ -159,6 +162,7 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
         // bondGames(source, target);
       }
       else{
+        console.log('Found: !Source & !Target -- Dropped to Else');
         postSource = {
             name: source.name,
             giant_bomb_id: source.id,
@@ -188,7 +192,7 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
     getReasonsDB = getDB('reasons');
 
     getReasonsDB.then(function(results){
-      reasonFound = reasonExists(results.data, description);
+      reasonFound = reasonExists(results, description);
     })
     .then(function(){
       if(reasonFound){
@@ -227,7 +231,7 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
         bondAdded
         .then(function(result){
           console.log('Bond Added! ID: ' + result.id);
-           newBond = result;
+          newBond = result;
         })
         .then(function(){
           addReason(newBond, description);

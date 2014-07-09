@@ -6,7 +6,6 @@ class BondsController < ApplicationController
   # GET /bonds.json
   def index
     @bonds = Bond.all
-    render json: @bonds
   end
 
   # GET /bonds/1

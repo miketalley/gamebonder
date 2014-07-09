@@ -69,6 +69,6 @@ class ReasonsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def reason_params
-      params.require(:reason).permit(:description, :bond_id)
+      params.require(:reason).permit(:description, :bond_id, :strength)
     end
 end

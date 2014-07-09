@@ -26,15 +26,15 @@ ActiveRecord::Schema.define(version: 20140707153048) do
 
   create_table "games", force: true do |t|
     t.string   "name"
-    t.string   "giant_bomb_id"
     t.string   "icon_url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "reasons", force: true do |t|
+    t.integer  "bond_id"
     t.text     "description"
-    t.integer  "strength",    default: 0
+    t.integer  "strength",    default: 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end
