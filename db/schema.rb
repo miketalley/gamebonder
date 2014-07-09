@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20140707153048) do
   create_table "games", force: true do |t|
     t.string   "name"
     t.string   "icon_url"
+    t.string   "thumb_url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
