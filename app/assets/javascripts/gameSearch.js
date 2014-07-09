@@ -146,7 +146,8 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
         postSource = {
             name: source.name,
             giant_bomb_id: source.id,
-            icon_url: source.image.icon_url
+            icon_url: source.image.icon_url,
+            thumb_url: source.image.tiny_url
           };
         postDB('games', postSource);
         // bondGames(source, target);
@@ -154,9 +155,10 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
       else if(foundSource && !foundTarget){
         console.log('Found: Source & !Target');
         postTarget = {
-            name: source.name,
-            giant_bomb_id: source.id,
-            icon_url: source.image.icon_url
+            name: target.name,
+            giant_bomb_id: target.id,
+            icon_url: target.image.icon_url,
+            thumb_url: target.image.tiny_url
           };
         postDB('games', postTarget);
         // bondGames(source, target);
@@ -166,14 +168,16 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
         postSource = {
             name: source.name,
             giant_bomb_id: source.id,
-            icon_url: source.image.icon_url
+            icon_url: source.image.icon_url,
+            thumb_url: source.image.tiny_url
           };
         postDB('games', postSource);
 
         postTarget = {
-            name: source.name,
-            giant_bomb_id: source.id,
-            icon_url: source.image.icon_url
+            name: target.name,
+            giant_bomb_id: target.id,
+            icon_url: target.image.icon_url,
+            thumb_url: target.image.tiny_url
           };
         postDB('games', postTarget);
         // bondGames(source, target);
