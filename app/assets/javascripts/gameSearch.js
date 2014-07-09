@@ -45,35 +45,47 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
     return defer.promise;
   };
 
+  var putDB = function(tableToPut, dataToPut) {
+    console.log('Running DB put...' + tableToPut);
+    url = '../../' + tableToPut + '/' + dataToPut.id + '.json';
+    var defer = $q.defer();
 
-  var existsInDB = function(tableToCheck, searchObject){
-    var tableScan;
+    $http.put(url, dataToPut)
+    .success(function(results){
+      defer.resolve(results);
+    })
+    .error(function(results){
+      defer.reject('Error Posting');
+    });
+
+    return defer.promise;
+  };
+
+  var bondExists = function(bondList, source, target){
+    var returnValue;
+
+    console.log('Searching for bond between...' + source.name + ' & ' + target.name);
+    angular.forEach(bondList, function(bond){
+      if(bond.source_id === source.id && bond.target_id === target.id){
+        returnValue = bond;
+      }
+    });
+
+    return returnValue;
+  };
+
+
+  var gameExists = function(gamesList, gameToFind){
     var returnValue = false;
 
-    tableScan = getDB(tableToCheck);
-
-    tableScan.then(function(results){
-      // If the searchObject is an array of games(checking if bond exists)
-      if($.isArray(searchObject)){
-        console.log('Searching for bond...' + searchObject[0].name + ' & ' + searchObject[1].name);
-        angular.forEach(results.data, function(result){
-          if(result.source_id === searchObject[0].id && result.target_id === searchObject[1].id){
-            returnValue = true;
-          }
-        });
+    console.log('Searching for game...' + gameToFind.name);
+    angular.forEach(gamesList, function(game){
+      if(game.id === gameToFind.id){
+          returnValue = true;
       }
-      // If searchObject is game check if it exists
-      else{
-        console.log('Searching for game...' + searchObject);
-        angular.forEach(results.data, function(result){
-          if(result.id === searchObject.id){
-            returnValue = true;
-          }
-        });
-      }
-    }).then(function(){
-      return returnValue;
     });
+
+    return returnValue;
   };
 
 
@@ -91,7 +103,9 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
     };
 
     gamesPosted = postDB('bonds', bond);
-    gamesPosted.then(function(result){
+
+    gamesPosted
+    .then(function(result){
       console.log('Bond Added! ID: ' + result.id);
     });
   };
@@ -100,66 +114,80 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
   // Once complete, calls bondGames to create bond
   var addGames = function(source, target){
     console.log('Running addGames');
+    var getGamesDB;
     var foundSource, foundTarget;
-    var resultsArray = [];
     var postSource, postTarget;
 
-    foundSource = existsInDB('games', source);
-    foundTarget = existsInDB('games', target);
+    getGamesDB = getDB('games');
 
-    console.log('foundSource: ' + foundSource);
-    console.log('foundTarget: ' + foundTarget);
+    getGamesDB
+    .then(function(results){
+      foundSource = gameExists(results.data, source);
+      foundTarget = gameExists(results.data, target);
+      console.log('foundSource: ' + foundSource);
+      console.log('foundTarget: ' + foundTarget);
+    })
+    .then(function(){
+      if(foundSource && foundTarget){
+      bondGames(source, target);
+      }
+      else if(!foundSource && foundTarget){
+        postSource = {
+            name: source.name,
+            giant_bomb_id: source.id,
+            icon_url: source.image.icon_url
+          };
+        postDB('games', postSource);
+        bondGames(source, target);
+      }
+      else if(foundSource && !foundTarget){
+        postTarget = {
+            name: source.name,
+            giant_bomb_id: source.id,
+            icon_url: source.image.icon_url
+          };
+        postDB('games', postTarget);
+        bondGames(source, target);
+      }
+      else{
+        postSource = {
+            name: source.name,
+            giant_bomb_id: source.id,
+            icon_url: source.image.icon_url
+          };
+        postDB('games', postSource);
 
-    if(foundSource && foundTarget){
-      bondGames(source, target);
-    }
-    else if(!foundSource && foundTarget){
-      postSource = {
-          name: source.name,
-          giant_bomb_id: source.id,
-          icon_url: source.image.icon_url
-        };
-      postDB('games', postSource);
-      bondGames(source, target);
-    }
-    else if(foundSource && !foundTarget){
-      postTarget = {
-          name: source.name,
-          giant_bomb_id: source.id,
-          icon_url: source.image.icon_url
-        };
-      postDB('games', postTarget);
-      bondGames(source, target);
-    }
-    else{
-      postSource = {
-          name: source.name,
-          giant_bomb_id: source.id,
-          icon_url: source.image.icon_url
-        };
-      postDB('games', postSource);
-
-      postTarget = {
-          name: source.name,
-          giant_bomb_id: source.id,
-          icon_url: source.image.icon_url
-        };
-      postDB('games', postTarget);
-      bondGames(source, target);
-    }
+        postTarget = {
+            name: source.name,
+            giant_bomb_id: source.id,
+            icon_url: source.image.icon_url
+          };
+        postDB('games', postTarget);
+        bondGames(source, target);
+      }
+    });
   };
 
 
   $scope.newBond = function(source, target, description){
-    var bond = existsInDB('bonds', [source, target]);
-    console.log('Bond = ' + bond);
+    var getBondDB = getDB('bonds');
+    var bondFound;
 
-    if(bond){
-      bond.strength = bond.strength + 1;
-    }
-    else {
-      addGames(source, target);
-    }
+    getBondDB
+    .then(function(results){
+      bondFound = bondExists(results, source, target);
+      console.log('Bond Found: ' + bondFound);
+    })
+    .then(function(){
+      if(bondFound){
+        bondFound.strength++;
+        console.log('Bond ID: ' + bondFound.id + ' Strength: ' + bondFound.strength);
+        putDB('bonds', bondFound);
+      }
+      else {
+        addGames(source, target);
+      }
+    });
   };
 
   $scope.searchList = function(searchTerm, list){
