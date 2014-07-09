@@ -28,7 +28,7 @@ class GamesController < ApplicationController
     @game = Game.new(
       id: game_params["giant_bomb_id"],
       name: game_params["name"],
-      icon_url: game_params["icon_url"]
+      icon_url: game_params["icon_url"],
       thumb_url: game_params["thumb_url"]
       )
 
