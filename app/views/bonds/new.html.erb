@@ -29,6 +29,7 @@
             Selected Source:
             <img src="{{source.image.icon_url}}">
             <p><a href="{{source.site_detail_url}}" target='_blank'>{{source.name}}</a> - {{source.id}}</p>
+            <button ng-click="existsInDB('games', source)">Exists?</button>
             <button ng-click="cancelSource()">Cancel Source</button>
           </div>
         </div>
