@@ -1,15 +1,15 @@
 var gamesApp = angular.module('gamesApp', ['customFilters'])
-.factory('dbSvc', function($http){
-  return {
-    get: function(tableToGet){
-      $http.get('../../' + tableToGet + '.json');
-    },
-    post: function(tableToPost, dataToPost){
-      $http.post('../../' + tableToPost + '.json', dataToPost);
-    }
-  };
-})
-.controller('GamesController', ['$scope', '$http', '$location', '$q', 'dbSvc', function($scope, $http, $location, $q, dbSvc){
+// .factory('dbSvc', function($http){
+//   return {
+//     get: function(tableToGet){
+//       $http.get('../../' + tableToGet + '.json');
+//     },
+//     post: function(tableToPost, dataToPost){
+//       $http.post('../../' + tableToPost + '.json', dataToPost);
+//     }
+//   };
+// })
+.controller('GamesController', ['$scope', '$http', '$location', '$q', function($scope, $http, $location, $q){
   $scope.pageSize = 5;
 
   var getDB = function(tableToGet) {
