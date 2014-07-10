@@ -239,6 +239,9 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
         })
         .then(function(){
           addReason(newBond, description);
+        })
+        .then(function(){
+          $location.path('/');
         });
       }
     });
@@ -248,6 +251,7 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
 
     populateList = function(data) {
       if(list === 'source'){
+        $scope.cancelSource();
         $scope.$apply(function(){
           $scope.sourcePage = 0;
           $scope.sourceList = data.results;
@@ -255,6 +259,7 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
         });
       }
       else{
+        $scope.cancelTarget();
         $scope.$apply(function(){
           $scope.targetPage = 0;
           $scope.targetList = data.results;
