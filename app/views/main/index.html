@@ -1,14 +1,14 @@
-<body>
+<body id='index-force-chart'>
   <div class='container'>
     <div class='row'>
     <h1>Welcome to Game Bonder!</h1>
 
-      <button class='button radius large-5 columns'><a href='/bonds/new' data-no-turbolink='true'>New Bond</a></button>
+      <button class='btn btn-default'><a href='/bonds/new' data-no-turbolink='true'>New Bond</a></button>
     </div><!-- Close Row -->
     <div class='row'>
       <script>
         /* Set the diagrams Height & Width */
-        var h = 700, w = 1050;
+        var h = 800, w = 1750;
 
         /* Set the color scale we want to use */
         var color = d3.scale.category20();
@@ -46,7 +46,7 @@
           .data(nodes)
           .enter()
           .append("text")
-          .attr("fill", "black")
+          .attr("fill", "white")
           .attr("font-family", "sans-serif")
           .attr("font-size", "10px")
           .attr('class', 'txts')
@@ -67,7 +67,7 @@
           .data(links)
           .enter()
           .append("line")
-          .style("stroke", "#000")
+          .style("stroke", "#fff")
           .style("stroke-width", 3)
           .attr("marker-end", "url(#end)");
 
