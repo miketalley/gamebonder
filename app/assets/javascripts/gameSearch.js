@@ -139,7 +139,6 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
     .then(function(){
       if(foundSource && foundTarget){
         console.log('Found: Source & Target');
-        // bondGames(source, target);
       }
       else if(!foundSource && foundTarget){
         console.log('Found: !Source & Target');
@@ -150,7 +149,6 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
             thumb_url: source.image.tiny_url
           };
         postDB('games', postSource);
-        // bondGames(source, target);
       }
       else if(foundSource && !foundTarget){
         console.log('Found: Source & !Target');
@@ -161,7 +159,6 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
             thumb_url: target.image.tiny_url
           };
         postDB('games', postTarget);
-        // bondGames(source, target);
       }
       else{
         console.log('Found: !Source & !Target -- Dropped to Else');
@@ -180,7 +177,6 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
             thumb_url: target.image.tiny_url
           };
         postDB('games', postTarget);
-        // bondGames(source, target);
       }
     });
   };
@@ -208,6 +204,8 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
         postDB('reasons', reason);
         console.log('Reason not found... adding');
       }
+    }).then(function(){
+      goToRoot();
     });
   };
 
@@ -245,9 +243,6 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
           addReason(newBond, description);
         });
       }
-    })
-    .then(function(){
-      goToRoot();
     });
   };
 

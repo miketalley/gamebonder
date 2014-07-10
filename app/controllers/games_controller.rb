@@ -11,6 +11,7 @@ class GamesController < ApplicationController
   # GET /games/1
   # GET /games/1.json
   def show
+    @children = @game.get_children(@game)
   end
 
   # GET /games/new
@@ -30,7 +31,7 @@ class GamesController < ApplicationController
       name: game_params["name"],
       icon_url: game_params["icon_url"],
       thumb_url: game_params["thumb_url"]
-      )
+    )
 
     respond_to do |format|
       if @game.save
