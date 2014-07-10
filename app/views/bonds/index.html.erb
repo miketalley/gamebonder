@@ -1,39 +1,26 @@
 <h1>Listing bonds</h1>
 
 <script>
-/* Set the diagrams Height & Width */
+  /* Set the diagrams Height & Width */
   var h = 700, w = 1050;
 
-/* Set the color scale we want to use */
+  /* Set the color scale we want to use */
   var color = d3.scale.category20();
 
-/* Establish/instantiate an SVG container object */
+  /* Establish/instantiate an SVG container object */
   var svg = d3.select("body")
     .append("svg")
     .attr("height",h)
     .attr("width",w);
 
-/* Pre-Load the json data using the queue library */
-queue()
+  /* Pre-Load the json data using the queue library */
+  queue()
   // Links
   .defer(d3.json, "../games.json")
   .defer(d3.json, "../bonds.json")
   // Nodes
 
   .await(makeDiag);
-
-// var my_links = $.map(my_data, function(d){return {"source": d.authorA, "target": d.authorB, "value":d.paperCount, "origin": d};});
-
-// var edges = [];
-
-// data.links.forEach(function(e) {
-//     // Get the source and target nodes
-//     var sourceNode = data.nodes.filter(function(n) { return n.id === e.source; })[0],
-//         targetNode = data.nodes.filter(function(n) { return n.id === e.target; })[0];
-
-//     // Add the edge to the array
-//     links.push({source: sourceNode, target: targetNode});
-// });
 
 /* Define the main worker or execution function */
 function makeDiag(error, nodes, links, table) {
