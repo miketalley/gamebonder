@@ -2,40 +2,52 @@
 
 <script>
 /* Set the diagrams Height & Width */
-    var h = 700, w = 1050;
+  var h = 700, w = 1050;
+
 /* Set the color scale we want to use */
-    var color = d3.scale.category20();
+  var color = d3.scale.category20();
+
 /* Establish/instantiate an SVG container object */
-    var svg = d3.select("body")
-      .append("svg")
-      .attr("height",h)
-      .attr("width",w);
-/* Build the directional arrows for the links/edges */
-  svg.append("svg:defs")
-  .selectAll("marker")
-  .data(["end"])
-  .enter().append("svg:marker")
-  .attr("id", String)
-  .attr("viewBox", "0 -5 10 10")
-  .attr("refX", 15)
-  .attr("refY", -1.5)
-  .attr("markerWidth", 6)
-  .attr("markerHeight", 6)
-  .attr("orient", "auto")
-  .append("svg:path")
-  .attr("d", "M0,-5L10,0L0,5");
+  var svg = d3.select("body")
+    .append("svg")
+    .attr("height",h)
+    .attr("width",w);
+
 /* Pre-Load the json data using the queue library */
 queue()
   // Links
-  // .defer(d3.json, "../bonds.json")
-  // Nodes
   .defer(d3.json, "../games.json")
+  .defer(d3.json, "../bonds.json")
+  // Nodes
+
   .await(makeDiag);
 
 // var my_links = $.map(my_data, function(d){return {"source": d.authorA, "target": d.authorB, "value":d.paperCount, "origin": d};});
 
+// var edges = [];
+
+// data.links.forEach(function(e) {
+//     // Get the source and target nodes
+//     var sourceNode = data.nodes.filter(function(n) { return n.id === e.source; })[0],
+//         targetNode = data.nodes.filter(function(n) { return n.id === e.target; })[0];
+
+//     // Add the edge to the array
+//     links.push({source: sourceNode, target: targetNode});
+// });
+
 /* Define the main worker or execution function */
 function makeDiag(error, nodes, links, table) {
+  var newLinks = [];
+  links.forEach(function(e) {
+    // Get the source and target nodes
+    var sourceNode = nodes.filter(function(n) { return n.id === e.source; })[0],
+        targetNode = nodes.filter(function(n) { return n.id === e.target; })[0];
+
+    // Add the edge to the array
+    newLinks.push({source: sourceNode, target: targetNode});
+  });
+  links = newLinks;
+
   /* Draw the node labels first */
   var texts = svg.selectAll("text")
     .data(nodes)
@@ -50,7 +62,7 @@ function makeDiag(error, nodes, links, table) {
   /* Establish the dynamic force behavor of the nodes */
   var force = d3.layout.force()
     .nodes(nodes)
-    // .links(links)
+    .links(links)
     .size([w,h])
     .linkDistance([150])
     .charge([-2500])
@@ -58,13 +70,14 @@ function makeDiag(error, nodes, links, table) {
     .start();
 
   /* Draw the edges/links between the nodes */
-  // var edges = svg.selectAll("line")
-  //                 .data(links)
-  //                 .enter()
-  //                 .append("line")
-  //                 .style("stroke", "#ccc")
-  //                 .style("stroke-width", 1)
-  //                 .attr("marker-end", "url(#end)");
+  var edges = svg.selectAll("line")
+    .data(links)
+    .enter()
+    .append("line")
+    .style("stroke", "#000")
+    .style("stroke-width", 3)
+    .attr("marker-end", "url(#end)");
+
 
   /* Draw the nodes themselves */
   var node = svg.selectAll(".node")
@@ -77,16 +90,17 @@ function makeDiag(error, nodes, links, table) {
   node.append('image')
     .attr("xlink:href", function(d){ return d.thumb_url; })
     .attr("x", 0)
-    .attr("y", 10)
+    .attr("y", 5)
     .attr("width", 50)
     .attr("height", 50);
 
   /* Run the Force effect */
   force.on("tick", function() {
-    // edges.attr("x1", function(d) { return d.source.x; })
-    //   .attr("y1", function(d) { return d.source.y; })
-    //   .attr("x2", function(d) { return d.target.x; })
-    //   .attr("y2", function(d) { return d.target.y; });
+    edges
+      .attr("x1", function(d) { return d.source.x + 20; })
+      .attr("y1", function(d) { return d.source.y + 20; })
+      .attr("x2", function(d) { return d.target.x + 20; })
+      .attr("y2", function(d) { return d.target.y + 20; });
     node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
     texts.attr("transform", function(d) {
       return "translate(" + d.x + "," + d.y + ")";
