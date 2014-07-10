@@ -1,3 +1,4 @@
+<div>
 <h1>New bond</h1>
 
   <div class='container'>
@@ -5,10 +6,10 @@
     <div class='row'>
 
       <!-- Source -->
-      <div class="col-md-5">
+      <div class="col-md-6">
         <h3>Game to Bond</h3>
         <input type='text' ng-model='sourceSearch'>
-        <button ng-click='searchList(sourceSearch, "source")'>Search Sources</button>
+        <button class='btn btn-default btn-sm' ng-click='searchList(sourceSearch, "source")'>Search Sources</button>
 
         <!-- Show source search results -->
         <div ng-hide="sourceSelected" id='source-search'>
@@ -19,9 +20,17 @@
             </div>
           </div>
           <div class='pull-right btn-group' id='source-search-buttons' ng-show='sourcePageCount'>
-            <button ng-disabled='sourcePage == 0' ng-click='sourcePage = sourcePage - 1'>Previous</button>
-            {{sourcePage + 1}}/{{sourcePageCount + 1}}
-            <button ng-disabled='sourcePage == sourcePageCount' ng-click='sourcePage = sourcePage + 1'>Next</button>
+            <div class='row'>
+              <div class='col-md-4'>
+                <button class='btn btn-default btn-sm' ng-disabled='sourcePage == 0' ng-click='sourcePage = sourcePage - 1'>Previous</button>
+              </div>
+              <div class='col-md-4 text-center'>
+                {{sourcePage + 1}}/{{sourcePageCount + 1}}
+              </div>
+              <div class='col-md-4'>
+                <button class='btn btn-default btn-sm' ng-disabled='sourcePage == sourcePageCount' ng-click='sourcePage = sourcePage + 1'>Next</button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -31,16 +40,16 @@
             Selected Source:
             <img src="{{source.image.icon_url}}">
             <p><a href="{{source.site_detail_url}}" target='_blank'>{{source.name}}</a> - {{source.id}}</p>
-            <button ng-click="cancelSource()">Cancel Source</button>
+            <button class='btn btn-default btn-sm' ng-click="cancelSource()">Cancel Source</button>
           </div>
         </div>
       </div>
 
       <!-- Target -->
-      <div class="col-md-5">
+      <div class="col-md-6">
         <h3>Game to Associate</h3>
         <input type='text' ng-model='targetSearch'>
-        <button ng-click='searchList(targetSearch, "target")'>Search Targets</button>
+        <button class='btn btn-default btn-sm' ng-click='searchList(targetSearch, "target")'>Search Targets</button>
 
         <!-- Show target search results -->
         <div ng-hide="targetSelected" id='target-search'>
@@ -50,10 +59,18 @@
               <img src='{{target.image.icon_url}}' height='80' width='80'><a href ng-click='selectTarget(target)'>{{target.name}} - {{target.id}}</a>
             </div>
           </div>
-          <div class='pull-right btn-group' id='target-search-buttons' ng-show='targetPageCount'>
-            <button ng-disabled='targetPage == 0' ng-click='targetPage = targetPage - 1'>Previous</button>
-            {{targetPage + 1}}/{{targetPageCount + 1}}
-            <button ng-disabled='targetPage == targetPageCount' ng-click='targetPage = targetPage + 1'>Next</button>
+          <div class='pull-right btn-group btn-sm' id='target-search-buttons' ng-show='targetPageCount'>
+            <div class='row'>
+              <div class='col-md-4'>
+                <button class='btn btn-default' ng-disabled='targetPage == 0' ng-click='targetPage = targetPage - 1'>Previous</button>
+              </div>
+              <div class='col-md-4 text-center'>
+                {{targetPage + 1}}/{{targetPageCount + 1}}
+              </div>
+              <div class='col-md-4'>
+                <button class='btn btn-default btn-sm' ng-disabled='targetPage == targetPageCount' ng-click='targetPage = targetPage + 1'>Next</button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -63,7 +80,7 @@
             Selected Target:
             <img src='{{target.image.icon_url}}'>
             <p><a href='{{target.site_detail_url}}' target='_blank'>{{target.name}}</a> - {{target.id}}</p>
-            <button ng-click="cancelTarget()">Cancel Target</button>
+            <button class='btn btn-default btn-sm' ng-click="cancelTarget()">Cancel Target</button>
           </div>
         </div>
       </div>
@@ -75,12 +92,13 @@
           Bond Description:
           <input type='text' ng-model='bondDescription'>
         </div>
-        <button ng-click='newBond(source, target, bondDescription)'><a href='/' data-no-turbolink='true'>Submit</a></button>
+        <button class='btn btn-default' ng-click='newBond(source, target, bondDescription)'><a href='/' data-no-turbolink='true'>Submit</a></button>
       </div>
     </div><!-- Close Row -->
     </div>
   </div><!-- Close Controller -->
   </div><!-- Close Container -->
+<%= link_to 'Back', root_path %>
+</div>
 
 
-<%= link_to 'Back', bonds_path %>

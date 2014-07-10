@@ -3,17 +3,26 @@
 }
 
 #target-search-buttons {
-  position: absolute;
+  position: fixed;
 }
 
 #sourceResults {
-  height: 400px;
+  height: 450px;
 }
 
 #targetResults {
-  height: 400px;
+  height: 450px;
 }
 
-#index-force-chart {
+body {
   background-color: black;
+  color: silver;
+}
+
+input {
+  color: black;
+}
+
+link {
+  color: white;
 }
