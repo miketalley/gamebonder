@@ -211,6 +211,10 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
     });
   };
 
+  var goToRoot = function(){
+    $location.path('/');
+  };
+
 
   $scope.newBond = function(source, target, description){
     var getBondDB = getDB('bonds');
@@ -239,11 +243,11 @@ var gamesApp = angular.module('gamesApp', ['customFilters'])
         })
         .then(function(){
           addReason(newBond, description);
-        })
-        .then(function(){
-          $location.path('/');
         });
       }
+    })
+    .then(function(){
+      goToRoot();
     });
   };
 

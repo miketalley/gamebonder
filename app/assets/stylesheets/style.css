@@ -1,9 +1,9 @@
 #source-search-buttons {
-  position: fixed;
+  position: absolute;
 }
 
 #target-search-buttons {
-  position: fixed;
+  position: absolute;
 }
 
 #sourceResults {

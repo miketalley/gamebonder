@@ -19,7 +19,7 @@
               <img src="{{source.image.icon_url}}" height='80' width='80'><a href ng-click='selectSource(source)'>{{source.name}} - {{source.id}}</a>
             </div>
           </div>
-          <div class='pull-right btn-group' id='source-search-buttons' ng-show='sourcePageCount'>
+          <div id='source-search-buttons' ng-show='sourcePageCount'>
             <div class='row'>
               <div class='col-md-4'>
                 <button class='btn btn-default btn-sm' ng-disabled='sourcePage == 0' ng-click='sourcePage = sourcePage - 1'>Previous</button>
