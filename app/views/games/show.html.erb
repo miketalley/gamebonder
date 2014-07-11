@@ -1,14 +1,26 @@
 <div class='container'>
-  <div class='row'>
+  <div class='row' ng-controller="GamesController">
     <div class='col-md-2'>
       <img src='<%= @game.icon_url %>'>
     </div>
     <div class='col-md-10'>
-      <h1><%= @game.name %></h1>
+      <h1 class='game-name'><%= @game.name %></h1>
       <h4>
       <dl>
-        <dt>Bonds</dt>
-        <dd><%= @game.bonds.count %></dd>
+        <dt><a href ng-click='showBonds = !showBonds'><h3 class='game-name'><%= @game.bonds.count %> Bonds</h3></a></dt>
+        <div class='bondList' ng-show='showBonds'>
+          <% @game.bonds.each do |bond| %>
+            <dd>
+            <% if bond.source.name == @game.name %>
+              <a class='game-name' href='<%= bond.target.id %>'><%= bond.target.name %></a>
+              <ul><li>Strength: <%= bond.strength %></li></ul>
+            <% else %>
+              <a class='game-name' href='<%= bond.target.id %>'><%= bond.source.name %></a>
+              <ul><li>Strength: <%= bond.strength %></li></ul>
+            <% end %>
+            </dd>
+          <% end %>
+        </div>
       </dl>
       </h4>
 
