@@ -1,9 +1,13 @@
-#source-search-buttons {
+/*#source-search-buttons {
   position: absolute;
 }
 
 #target-search-buttons {
   position: absolute;
+}*/
+
+#source-target-search {
+  height: 600px;
 }
 
 #sourceResults {
