@@ -32,14 +32,14 @@ API Keys:
 You will need an API Key from Giant Bomb in order to make requests. Check out the [Giant Bomb Quick Start Guide](http://www.giantbomb.com/forums/api-developers-3017/quick-start-guide-to-using-the-api-1427959/)
 
 Installed gems include:
-gem 'angularjs-rails'
-gem 'd3-rails'
-gem 'puma'
-gem 'bootstrap-sass'
-gem 'rails_12factor'
-gem 'jquery-turbolinks'
-gem 'pry-rails'
-gem 'newrelic_rpm'
+'gem 'angularjs-rails''
+'gem 'd3-rails''
+'gem 'puma''
+'gem 'bootstrap-sass''
+'gem 'rails_12factor''
+'gem 'jquery-turbolinks''
+'gem 'pry-rails''
+'gem 'newrelic_rpm''
 
 To begin, run `bundle install`
 
