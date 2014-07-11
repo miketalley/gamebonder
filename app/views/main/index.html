@@ -28,14 +28,14 @@
         // Replace references of IDs
         var newLinks = [];
 
-        // links.forEach(function(e) {
-        //   var sourceNode = nodes.filter(function(n) { return n.id === e.source; })[0],
-        //       targetNode = nodes.filter(function(n) { return n.id === e.target; })[0];
+        links.forEach(function(e) {
+          var sourceNode = nodes.filter(function(n) { return n.id === e.source; })[0],
+              targetNode = nodes.filter(function(n) { return n.id === e.target; })[0];
 
-        //   newLinks.push({source: sourceNode, target: targetNode});
-        // });
+          newLinks.push({source: sourceNode, target: targetNode});
+        });
 
-        // links = newLinks;
+        links = newLinks;
 
         // Draw Game Name
         var texts = svg.selectAll("text")
