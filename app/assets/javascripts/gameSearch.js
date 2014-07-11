@@ -217,7 +217,6 @@ var gamesApp = angular.module('gamesApp', ['customFilters', 'ngAnimate'])
     $scope.$apply();
   };
 
-
   $scope.newBond = function(source, target, description){
     var getBondDB = getDB('bonds');
     var bondFound, newBond, bondAdded;
@@ -285,11 +284,6 @@ var gamesApp = angular.module('gamesApp', ['customFilters', 'ngAnimate'])
       dataType: "jsonp"
     });
 
-    // $http.jsonp("http://www.giantbomb.com/api/game/1/?format=json&api_key=5a62be4c8f2f18be4666979b769e4b43286554af&callback=JSON_CALLBACK").success(function(data){
-    //   $scope.sourceList = data.results;
-    // });
-
-
   };
 
   $scope.pullGame = function(id){
@@ -316,10 +310,4 @@ var gamesApp = angular.module('gamesApp', ['customFilters', 'ngAnimate'])
     $scope.targetSelected = false;
   };
 
-
 }]);
-// .config(['$httpProvider', function($httpProvider) {
-//     $httpProvider.defaults.useXDomain = true;
-//     delete $httpProvider.defaults.headers.common['X-Requested-With'];
-//   }
-// ]);
