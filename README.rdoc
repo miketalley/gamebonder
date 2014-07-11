@@ -44,4 +44,4 @@ gem 'newrelic_rpm'
 To begin, run `bundle install`
 
 
-Developed by: [Mike Talley](https://github.com/miketalley)
+Developed by: [Mike Talley](https://github.com/miketalley) - [michael.d.talley@gmail.com](mailto: michael.d.talley@gmail.com) - [michaeltalley.com](http://www.michaeltalley.com)
