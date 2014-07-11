@@ -37,7 +37,6 @@ Installed gems include:
 * puma
 * bootstrap-sass
 * rails_12factor
-* jquery-turbolinks
 * pry-rails
 * newrelic_rpm
 
