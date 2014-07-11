@@ -7,6 +7,7 @@ gem 'bootstrap-sass'
 gem 'rails_12factor'
 gem 'jquery-turbolinks'
 gem 'pry-rails'
+gem 'newrelic_rpm'
 
 
 
