@@ -4,9 +4,8 @@ class MainController < ApplicationController
 
   end
 
-  def games_list
-    @games_list = JSON.parse(File.read('app/assets/json/gamesList.json'))
-    render json: @games_list
+  def show
+
   end
 
 end

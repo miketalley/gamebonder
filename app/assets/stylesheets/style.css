@@ -6,6 +6,10 @@
   position: absolute;
 }*/
 
+#nav-spacer{
+  height: 50px;
+}
+
 #source-target-search {
   height: 600px;
 }
@@ -37,6 +41,13 @@ input {
 
 link {
   color: white;
+}
+
+.panel {
+  color: black;
+  padding: 20px;
+  font-size: 16px;
+  margin: 25px;
 }
 
 /*CSS for Slideup*/

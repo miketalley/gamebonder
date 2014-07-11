@@ -1,27 +1,17 @@
 var gamesApp = angular.module('gamesApp', ['customFilters', 'ngAnimate'])
 .directive('ngEnter', function() {
-        return function(scope, element, attrs) {
-            element.bind("keydown keypress", function(event) {
-                if(event.which === 13) {
-                    scope.$apply(function(){
-                        scope.$eval(attrs.ngEnter, {'event': event});
-                    });
+  return function(scope, element, attrs) {
+    element.bind("keydown keypress", function(event) {
+      if(event.which === 13) {
+        scope.$apply(function(){
+          scope.$eval(attrs.ngEnter, {'event': event});
+        });
 
-                    event.preventDefault();
-                }
-            });
-        };
-    })
-// .factory('dbSvc', function($http){
-//   return {
-//     get: function(tableToGet){
-//       $http.get('../../' + tableToGet + '.json');
-//     },
-//     post: function(tableToPost, dataToPost){
-//       $http.post('../../' + tableToPost + '.json', dataToPost);
-//     }
-//   };
-// })
+        event.preventDefault();
+      }
+    });
+  };
+})
 .controller('GamesController', ['$scope', '$http', '$location', '$q', function($scope, $http, $location, $q){
   $scope.pageSize = 5;
 
@@ -218,12 +208,13 @@ var gamesApp = angular.module('gamesApp', ['customFilters', 'ngAnimate'])
         console.log('Reason not found... adding');
       }
     }).then(function(){
-      goToRoot();
+      window.location = '/';
     });
   };
 
   var goToRoot = function(){
     $location.path('/');
+    $scope.$apply();
   };
 
 
