@@ -18,6 +18,14 @@
   height: 450px;
 }
 
+.selected-game {
+  height: 350px;
+}
+
+.game-name {
+  color: white;
+}
+
 body {
   background-color: black;
   color: silver;
@@ -30,3 +38,85 @@ input {
 link {
   color: white;
 }
+
+/*CSS for Slideup*/
+
+/*.slideup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+}*/
+/*.slideup.ng-show,
+.slideup.ng-hide {
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    transition: all 1s ease;
+}
+.slideup.ng-show {
+    top: 100%;
+}
+.slideup.ng-show-active {
+    top: 0;
+}
+.slideup.ng-hide {
+    top: 0;
+}
+.slideup.ng-hide-active {
+    top: -100%;
+}
+
+.animate-enter,
+.animate-leave
+{
+    -webkit-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+}
+
+.animate-enter {
+    top: 100%;
+}
+.animate-enter.animate-enter-active {
+    top: 0;
+}
+
+.animate-leave {
+    top: 0;
+}
+.animate-leave.animate-leave-active{
+    top: -100%;
+}*/
+
+/*CSS For Search Results*/
+
+/*.search-results-enter,
+.search-results-leave
+{
+    -webkit-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    position: relative;
+    display: block;
+}
+
+.search-results-enter.search-results-enter-active,
+.search-results-leave {
+    opacity: 1;
+    top: 0;
+    height: 30px;
+}
+
+.search-results-leave.search-results-leave-active,
+.search-results-enter {
+    opacity: 0;
+    top: -50px;
+    height: 0px;
+}
+*/

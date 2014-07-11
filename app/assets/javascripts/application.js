@@ -14,6 +14,7 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require angular
+//= require angular-animate
 //= require angular-route
 //= require d3
 //= require turbolinks

@@ -4,19 +4,26 @@
     <h4>Know two alike games?</h4>
     <div class='row' id='source-target-search'>
       <!-- Source -->
-      <div class="col-md-6">
+      <div ng-view class="col-md-6 slideup" ng-animate='slideup'>
         <h3><span class='label label-primary'>This game...</span></h3>
         <div class='input-group'>
-          <input type='text' class='form-control' ng-model='sourceSearch'>
+          <input type='text' class='form-control' ng-model='sourceSearch'ng-enter='searchList(sourceSearch, "source")'>
           <span class='input-group-btn'><button class='btn btn-default' ng-click='searchList(sourceSearch, "source")'>Search</button></span>
         </div>
 
         <!-- Show source search results -->
         <div ng-hide="sourceSelected" id='source-search'>
-          <h4>Results:</h4>
           <div id='sourceResults'>
-            <div ng-repeat="source in sourceList | startFrom: sourcePage * pageSize | limitTo: 5">
-              <img src="{{source.image.icon_url}}" height='80' width='80'><a href ng-click='selectSource(source)'>{{source.name}} - {{source.id}}</a>
+            <h4 class='label'>Results:</h4>
+            <div ng-repeat="source in sourceList | startFrom: sourcePage * pageSize | limitTo: 5" class='search-results'>
+              <div class='row result'>
+                <div class='col-md-2'>
+                  <a href ng-click='selectSource(source)'><img src="{{source.image.icon_url}}" height='80' width='80'></a>
+                </div>
+                <div class='col-md-10'>
+                  <a href ng-click='selectSource(source)'><h4 class='game-name'>{{source.name}}</h4></a>
+                </div>
+              </div>
             </div>
           </div>
           <div class='btn-group btn-group-sm' id='source-search-buttons' ng-show='sourcePageCount'>
@@ -27,30 +34,48 @@
         </div>
 
         <!-- Show source when selected -->
-        <div ng-show='sourceSelected'>
+        <div ng-show='sourceSelected' class='selected-game'>
           <div>
-            <h4>Selected Source:</h4>
-            <img src="{{source.image.icon_url}}">
-            <p><a href="{{source.site_detail_url}}" target='_blank'>{{source.name}}</a> - {{source.id}}</p>
-            <button class='btn btn-default btn-sm' ng-click="cancelSource()">Cancel Source</button>
+            <h4 class='label'>Selected Source:</h4>
+            <div class='row result selected-game'>
+                <div class='col-md-2'>
+                  <img src="{{source.image.medium_url}}" width='287' height='344'>
+                </div>
+              </div>
+              <div class='row'>
+                <div class='col-md-10' class='game-name'>
+                  <h1 class='game-name'>{{source.name}}</h1>
+                  <a href='{{source.site_detail_url}}' target='_blank' class='game-name'>Info on Giant Bomb</a>
+                </div>
+              </div>
+            <div class='row pull-right'>
+              <button class='btn btn-default btn-sm' ng-click="cancelSource()">Cancel</button>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Target -->
-      <div class="col-md-6">
+      <div ng-view class="col-md-6 slideup" ng-show='sourceSearched' ng-animate='slideup'>
         <h3><span class='label label-primary'>...is like this one...</span></h3>
         <div class='input-group'>
-          <input type='text' class='form-control' ng-model='targetSearch'>
+          <input type='text' class='form-control' ng-model='targetSearch' ng-enter='searchList(targetSearch, "target")'>
           <span class='input-group-btn'><button class='btn btn-default' ng-click='searchList(targetSearch, "target")'>Search</button></span>
         </div>
 
         <!-- Show target search results -->
         <div ng-hide="targetSelected" id='target-search'>
-          <h4>Results:</h4>
+          <h4 class='label'>Results:</h4>
           <div id='targetResults'>
             <div ng-repeat="target in targetList | startFrom: targetPage * pageSize | limitTo: 5">
-              <img src='{{target.image.icon_url}}' height='80' width='80'><a href ng-click='selectTarget(target)'>{{target.name}} - {{target.id}}</a>
+              <div class='row result'>
+                <div class='col-md-2'>
+                  <a href ng-click='selectTarget(target)'><img src='{{target.image.icon_url}}' height='80' width='80'></a>
+                </div>
+                <div class='col-md-10'>
+                  <a href ng-click='selectTarget(target)'><h4 class='game-name'>{{target.name}}</h4></a>
+                </div>
+              </div>
             </div>
           </div>
           <div class='btn-group btn-group-sm' id='target-search-buttons' ng-show='targetPageCount'>
@@ -63,20 +88,31 @@
         <!-- Show target when selected -->
         <div ng-show='targetSelected'>
           <div>
-            <h4>Selected Target:</h4>
-            <img src='{{target.image.icon_url}}'>
-            <p><a href='{{target.site_detail_url}}' target='_blank'>{{target.name}}</a> - {{target.id}}</p>
-            <button class='btn btn-default btn-sm' ng-click="cancelTarget()">Cancel Target</button>
+            <h4 class='label'>Selected Target:</h4>
+              <div class='row result selected-game'>
+                <div class='col-md-2'>
+                  <img src='{{target.image.medium_url}}' width='287' height='344'>
+                </div>
+              </div>
+              <div class='row'>
+                <div class='col-md-10' class='game-name'>
+                  <h1 class='game-name'>{{target.name}}</h1>
+                  <a href='{{target.site_detail_url}}' target='_blank' class='game-name'>Info on Giant Bomb</a>
+                </div>
+              </div>
+            <div class='row pull-right'>
+              <button class='btn btn-default btn-sm' ng-click="cancelTarget()">Cancel</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class='row'>
+    <div class='row' ng-show='targetSearched' ng-animate="slideup">
       <div class='col-md-8' id='because-search'>
         <h3><span class='label label-primary'>...because...</span></h3>
         <div class='input-group'>
-          <input type='text' class='form-control' ng-model='bondDescription'>
+          <input type='text' class='form-control' ng-disabled='!sourceSelected && !targetSelected' ng-model='bondDescription' ng-enter='newBond(source, target, bondDescription)'>
           <span class='input-group-btn'><button class='btn btn-default' ng-disabled='!sourceSelected && !targetSelected' ng-click='newBond(source, target, bondDescription)'>Submit</button></span>
         </div>
       </div>

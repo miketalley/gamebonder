@@ -1,46 +1,47 @@
   <div class='container'>
     <div class='row'>
-    <h1>Welcome to Game Bonder!</h1>
-
+      <h1>Game Bonder</h1>
       <button class='btn btn-default'><a href='/bonds/new' data-no-turbolink='true'>New Bond</a></button>
     </div><!-- Close Row -->
     <div class='row'>
+      <!-- Display Force Chart for Game -->
       <script>
-        /* Set the diagrams Height & Width */
-        var h = 800, w = 1750;
+      var w = 1750,
+          h = 800,
+          root;
 
-        /* Set the color scale we want to use */
-        var color = d3.scale.category20();
+      var force = d3.layout.force()
+          .size([w, h]);
 
-        /* Establish/instantiate an SVG container object */
-        var svg = d3.select("body")
-          .append("svg")
-          .attr("height",h)
-          .attr("width",w);
+      var svg = d3.select("body").append("svg")
+          .attr("width", w)
+          .attr("height", h);
 
-        /* Pre-Load the json data using the queue library */
-        queue()
-        // Links
-        .defer(d3.json, "../games.json")
-        .defer(d3.json, "../bonds.json")
-        // Nodes
+      var link = svg.selectAll(".link"),
+          node = svg.selectAll(".node");
 
-        .await(makeDiag);
+      queue()
+      .defer(d3.json, "../games.json")
+      .defer(d3.json, "../bonds.json")
+      .await(update);
 
-      /* Define the main worker or execution function */
-      function makeDiag(error, nodes, links, table) {
+      function update(error, games, bonds, table) {
+        var nodes = games,
+            links = bonds;
+
+        // Replace references of IDs
         var newLinks = [];
+
         links.forEach(function(e) {
-          // Get the source and target nodes
           var sourceNode = nodes.filter(function(n) { return n.id === e.source; })[0],
               targetNode = nodes.filter(function(n) { return n.id === e.target; })[0];
 
-          // Add the edge to the array
           newLinks.push({source: sourceNode, target: targetNode});
         });
+
         links = newLinks;
 
-        /* Draw the node labels first */
+        // Draw Game Name
         var texts = svg.selectAll("text")
           .data(nodes)
           .enter()
@@ -51,7 +52,7 @@
           .attr('class', 'txts')
           .text(function(d) { return d.name; });
 
-        /* Establish the dynamic force behavor of the nodes */
+        // Set Dynamic Force
         var force = d3.layout.force()
           .nodes(nodes)
           .links(links)
@@ -61,7 +62,7 @@
           .gravity(0.3)
           .start();
 
-        /* Draw the edges/links between the nodes */
+        // Draw Lines for Bonds
         var edges = svg.selectAll("line")
           .data(links)
           .enter()
@@ -71,7 +72,7 @@
           .attr("marker-end", "url(#end)");
 
 
-        /* Draw the nodes themselves */
+        // Draw Nodes
         var node = svg.selectAll(".node")
           .data(nodes)
           .enter()
@@ -79,14 +80,16 @@
           .attr('class', 'node')
           .call(force.drag);
 
+        // Append Images to Nodes
         node.append('image')
           .attr("xlink:href", function(d){ return d.thumb_url; })
+          .attr('ondblclick', function(d){ return "openLink('/games/" + d.id + "')"; })
           .attr("x", 0)
           .attr("y", 5)
           .attr("width", 50)
           .attr("height", 50);
 
-        /* Run the Force effect */
+        // Turn on Force
         force.on("tick", function() {
           edges
             .attr("x1", function(d) { return d.source.x + 20; })
@@ -97,9 +100,8 @@
           texts.attr("transform", function(d) {
             return "translate(" + d.x + "," + d.y + ")";
           });
-        }); // End tick func
-      } // End makeDiag worker func
-
+        });
+      }
       </script>
 
     </div>

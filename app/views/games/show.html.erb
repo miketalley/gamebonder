@@ -1,131 +1,26 @@
-<p id="notice"><%= notice %></p>
+<div class='container'>
+  <div class='row'>
+    <div class='col-md-2'>
+      <img src='<%= @game.icon_url %>'>
+    </div>
+    <div class='col-md-10'>
+      <h1><%= @game.name %></h1>
 
-<p>
-  <strong>Name:</strong>
-  <%= @game.name %>
-</p>
-
-<p>
-  <strong>ID:</strong>
-  <%= @game.id %>
-</p>
-
-<!-- <script>
-        /* Set the diagrams Height & Width */
-        var h = 800, w = 1750;
-        var gameID = window.location.href.split('/').pop();
-
-        /* Set the color scale we want to use */
-        var color = d3.scale.category20();
-
-        /* Establish/instantiate an SVG container object */
-        var svg = d3.select("body")
-          .append("svg")
-          .attr("height",h)
-          .attr("width",w);
-
-        /* Pre-Load the json data using the queue library */
-        // queue()
-
-        // // Links
-        // .defer(
-        d3.json("../games" + gameID + ".json", function(data){
-          .nodes(data.games)
-          .links(data.bonds);
-        });
-        // .defer(d3.json, "../bonds.json")
-        // Nodes
-          // .nodes()
-
-        // .await(makeDiag);
-
-      /* Define the main worker or execution function */
-      function makeDiag(error, nodes, links, table) {
-
-        var newLinks = [];
-        links.forEach(function(e) {
-          // Get the source and target nodes
-          var sourceNode = nodes.filter(function(n) { return n.id === e.source; })[0],
-              targetNode = nodes.filter(function(n) { return n.id === e.target; })[0];
-
-          // Add the edge to the array
-          newLinks.push({source: sourceNode, target: targetNode});
-        });
-        links = newLinks;
-
-        /* Draw the node labels first */
-        var texts = svg.selectAll("text")
-          .data(nodes)
-          .enter()
-          .append("text")
-          .attr("fill", "white")
-          .attr("font-family", "sans-serif")
-          .attr("font-size", "10px")
-          .attr('class', 'txts')
-          .text(function(d) { return d.name; });
-
-        /* Establish the dynamic force behavor of the nodes */
-        var force = d3.layout.force()
-          .nodes(nodes)
-          .links(links)
-          .size([w,h])
-          .linkDistance([150])
-          .charge([-2500])
-          .gravity(0.3)
-          .start();
-
-        /* Draw the edges/links between the nodes */
-        var edges = svg.selectAll("line")
-          .data(links)
-          .enter()
-          .append("line")
-          .style("stroke", "#fff")
-          .style("stroke-width", 3)
-          .attr("marker-end", "url(#end)");
+    </div>
+  </div>
 
 
-        /* Draw the nodes themselves */
-        var node = svg.selectAll(".node")
-          .data(nodes)
-          .enter()
-          .append("g")
-          .attr('class', 'node')
-          .call(force.drag);
-
-        node.append('image')
-          .attr("xlink:href", function(d){ return d.thumb_url; })
-          .attr("x", 0)
-          .attr("y", 5)
-          .attr("width", 50)
-          .attr("height", 50);
-
-        /* Run the Force effect */
-        force.on("tick", function() {
-          edges
-            .attr("x1", function(d) { return d.source.x + 20; })
-            .attr("y1", function(d) { return d.source.y + 20; })
-            .attr("x2", function(d) { return d.target.x + 20; })
-            .attr("y2", function(d) { return d.target.y + 20; });
-          node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-          texts.attr("transform", function(d) {
-            return "translate(" + d.x + "," + d.y + ")";
-          });
-        }); // End tick func
-      } // End makeDiag worker func
-
-</script> -->
-
+<!-- Display Force Chart for Game -->
 <script>
-
 var w = 1250,
     h = 600,
     root;
 
+// Get game ID from URL
 var gameID = window.location.href.split('/').pop();
 
 var force = d3.layout.force()
     .size([w, h]);
-    // .on("tick", tick);
 
 var svg = d3.select("body").append("svg")
     .attr("width", w)
@@ -142,163 +37,79 @@ d3.json("../games/" + gameID + ".json", function(json) {
 function update() {
   var nodes = root.games,
       links = root.bonds;
+
+  // Replace references of IDs
   var newLinks = [];
+
   links.forEach(function(e) {
-    // Get the source and target nodes
     var sourceNode = nodes.filter(function(n) { return n.id === e.source_id; })[0],
         targetNode = nodes.filter(function(n) { return n.id === e.target_id; })[0];
 
-    // Add the edge to the array
     newLinks.push({source: sourceNode, target: targetNode});
   });
+
   links = newLinks;
 
-/* Draw the node labels first */
-        var texts = svg.selectAll("text")
-          .data(nodes)
-          .enter()
-          .append("text")
-          .attr("fill", "white")
-          .attr("font-family", "sans-serif")
-          .attr("font-size", "10px")
-          .attr('class', 'txts')
-          .text(function(d) { return d.name; });
+  // Draw Game Name
+  var texts = svg.selectAll("text")
+    .data(nodes)
+    .enter()
+    .append("text")
+    .attr("fill", "white")
+    .attr("font-family", "sans-serif")
+    .attr("font-size", "10px")
+    .attr('class', 'txts')
+    .text(function(d) { return d.name; });
 
-        /* Establish the dynamic force behavor of the nodes */
-        var force = d3.layout.force()
-          .nodes(nodes)
-          .links(links)
-          .size([w,h])
-          .linkDistance([150])
-          .charge([-2500])
-          .gravity(0.3)
-          .start();
+  // Set Dynamic Force
+  var force = d3.layout.force()
+    .nodes(nodes)
+    .links(links)
+    .size([w,h])
+    .linkDistance([150])
+    .charge([-2500])
+    .gravity(0.3)
+    .start();
 
-        /* Draw the edges/links between the nodes */
-        var edges = svg.selectAll("line")
-          .data(links)
-          .enter()
-          .append("line")
-          .style("stroke", "#fff")
-          .style("stroke-width", 3)
-          .attr("marker-end", "url(#end)");
-
-
-        /* Draw the nodes themselves */
-        var node = svg.selectAll(".node")
-          .data(nodes)
-          .enter()
-          .append("g")
-          .attr('class', 'node')
-          .call(force.drag);
-
-        node.append('image')
-          .attr("xlink:href", function(d){ return d.thumb_url; })
-          .attr("x", 0)
-          .attr("y", 5)
-          .attr("width", 50)
-          .attr("height", 50);
-
-        /* Run the Force effect */
-        force.on("tick", function() {
-          edges
-            .attr("x1", function(d) { return d.source.x + 20; })
-            .attr("y1", function(d) { return d.source.y + 20; })
-            .attr("x2", function(d) { return d.target.x + 20; })
-            .attr("y2", function(d) { return d.target.y + 20; });
-          node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-          texts.attr("transform", function(d) {
-            return "translate(" + d.x + "," + d.y + ")";
-          });
-        }); // End tick func
-      }
+  // Draw Lines for Bonds
+  var edges = svg.selectAll("line")
+    .data(links)
+    .enter()
+    .append("line")
+    .style("stroke", "#fff")
+    .style("stroke-width", 3)
+    .attr("marker-end", "url(#end)");
 
 
+  // Draw Nodes
+  var node = svg.selectAll(".node")
+    .data(nodes)
+    .enter()
+    .append("g")
+    .attr('class', 'node')
+    .call(force.drag);
 
+  // Append Images to Nodes
+  node.append('image')
+    .attr("xlink:href", function(d){ return d.thumb_url; })
+    .attr('ondblclick', function(d){ return "openLink('/games/" + d.id + "')"; })
+    .attr("x", 0)
+    .attr("y", 5)
+    .attr("width", 50)
+    .attr("height", 50);
 
-//   // Restart the force layout.
-//   force
-//       .nodes(nodes)
-//       .links(links)
-//       .start();
-
-//   // Update the links…
-//   link = link.data(links, function(d) { return d.target.id; });
-
-//   // Exit any old links.
-//   link.exit().remove();
-
-//   // Enter any new links.
-//   link.enter().insert("line", ".node")
-//       .attr("class", "link")
-//       .attr("x1", function(d) { return d.source.x; })
-//       .attr("y1", function(d) { return d.source.y; })
-//       .attr("x2", function(d) { return d.target.x; })
-//       .attr("y2", function(d) { return d.target.y; });
-
-//   // Update the nodes…
-//   node = node.data(nodes, function(d) { return d.id; }).style("fill", color);
-
-//   // Exit any old nodes.
-//   node.exit().remove();
-
-//   // Enter any new nodes.
-//   node.enter().append("circle")
-//       .attr("class", "node")
-//       .attr("cx", function(d) { return d.x; })
-//       .attr("cy", function(d) { return d.y; })
-//       .attr("r", function(d) { return Math.sqrt(d.size) / 10 || 4.5; })
-//       .style("fill", color)
-//       .on("click", click)
-//       .call(force.drag);
-// }
-
-// function tick() {
-//   link.attr("x1", function(d) { return d.source.x; })
-//       .attr("y1", function(d) { return d.source.y; })
-//       .attr("x2", function(d) { return d.target.x; })
-//       .attr("y2", function(d) { return d.target.y; });
-
-//   node.attr("cx", function(d) { return d.x; })
-//       .attr("cy", function(d) { return d.y; });
-// }
-
-// // Color leaf nodes orange, and packages white or blue.
-// function color(d) {
-//   return d._children ? "#3182bd" : d.children ? "#c6dbef" : "#fd8d3c";
-// }
-
-// // Toggle children on click.
-// function click(d) {
-//   if (!d3.event.defaultPrevented) {
-//     if (d.children) {
-//       d._children = d.children;
-//       d.children = null;
-//     } else {
-//       d.children = d._children;
-//       d._children = null;
-//     }
-//     update();
-//   }
-// }
-
-// // Returns a list of all nodes under the root.
-// function flatten(root) {
-//   var nodes = [], i = 0;
-
-//   function recurse(node) {
-//     if (node.children) node.children.forEach(recurse);
-//     if (!node.id) node.id = ++i;
-//     nodes.push(node);
-//   }
-
-//   recurse(root);
-//   return nodes;
-// }
-
+  // Turn on Force
+  force.on("tick", function() {
+    edges
+      .attr("x1", function(d) { return d.source.x + 20; })
+      .attr("y1", function(d) { return d.source.y + 20; })
+      .attr("x2", function(d) { return d.target.x + 20; })
+      .attr("y2", function(d) { return d.target.y + 20; });
+    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+    texts.attr("transform", function(d) {
+      return "translate(" + d.x + "," + d.y + ")";
+    });
+  });
+}
 </script>
-
-
-
-<%= link_to 'Edit', edit_game_path(@game) %> |
-<%= link_to 'Back', games_path %>
+</div>
