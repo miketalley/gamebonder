@@ -33,6 +33,7 @@
 body {
   background-color: black;
   color: silver;
+  overflow: hidden;
 }
 
 input {
