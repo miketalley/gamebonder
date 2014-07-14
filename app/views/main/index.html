@@ -36,6 +36,8 @@
         .await(update);
 
       function update(error, games, bonds) {
+        console.log('Games: ' + games);
+        console.log('Bonds: ' + bonds);
         var nodes = games,
             links = bonds;
         var newLinks = [];
