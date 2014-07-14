@@ -20,12 +20,11 @@
             <% end %>
             </dd>
           <% end %>
-        </div>
+        </div><!-- bondList -->
       </dl>
       </h4>
-
-    </div>
-  </div>
+    </div><!-- col-md-10 -->
+  </div><!-- row -->
 
   <div class='row'>
     <div class='force-chart'>
@@ -81,7 +80,7 @@
           .text(function(d) { return d.name; });
 
         // Set Dynamic Force
-        var force = d3.layout.force()
+        force
           .nodes(nodes)
           .links(links)
           .size([w,h])

@@ -1,21 +1,12 @@
-  <div class='container'>
+  <div class='container' ng-controller="GamesController">
     <div class='row'>
       <!-- Display Force Chart for Game -->
       <script>
-      // var w = window.innerWidth,
-      //     h = window.innerHeight,
-      var w = $(window).width(),
-          h = $(window).height(),
-          root;
+      var w = window.innerWidth,
+          h = window.innerHeight,
+          root, games, bonds;
 
       var color = d3.scale.category20();
-
-      var svg = d3.select("body").append("svg")
-        .attr("width", w)
-        .attr("height", h);
-
-      var link = svg.selectAll(".link"),
-        node = svg.selectAll(".node");
 
       // Set Dynamic Force
       var force = d3.layout.force()
@@ -23,6 +14,13 @@
         .linkDistance([50])
         .charge([-2500])
         .gravity(0.3);
+
+      var svg = d3.select("body").append("svg")
+        .attr("width", w)
+        .attr("height", h);
+
+      var link = svg.selectAll(".link"),
+        node = svg.selectAll(".node");
 
       // Fix position of nodes once moved
       var drag = force.drag().on("dragstart", dragstart);
@@ -38,8 +36,8 @@
         .await(update);
 
       function update(error, games, bonds) {
-        console.log('Games: ' + games);
-        console.log('Bonds: ' + bonds);
+        console.log('Games: ' + games.length);
+        console.log('Bonds: ' + bonds.length);
         var nodes = games,
             links = bonds;
         var newLinks = [];
