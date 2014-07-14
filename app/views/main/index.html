@@ -6,34 +6,50 @@
           h = window.innerHeight,
           root;
 
+      var color = d3.scale.category20();
+
       var svg = d3.select("body").append("svg")
-          .attr("width", w)
-          .attr("height", h);
+        .attr("width", w)
+        .attr("height", h);
 
       var link = svg.selectAll(".link"),
-          node = svg.selectAll(".node");
+        node = svg.selectAll(".node");
 
+      // Set Dynamic Force
+      var force = d3.layout.force()
+        .size([w,h])
+        .linkDistance([50])
+        .charge([-2500])
+        .gravity(0.3);
 
+      // Fix position of nodes once moved
+      var drag = force.drag().on("dragstart", dragstart);
+
+      function dragstart(d) {
+          d3.select(this).classed("fixed", d.fixed = true);
+      }
+
+      // Getting data for nodes and links
       queue()
-      .defer(d3.json, "../games.json")
-      .defer(d3.json, "../bonds.json")
-      .await(update);
+        .defer(d3.json, "../games.json")
+        .defer(d3.json, "../bonds.json")
+        .await(update);
 
-      function update(error, games, bonds, table) {
+      function update(error, games, bonds) {
         var nodes = games,
             links = bonds;
-
-        // Replace references of IDs
         var newLinks = [];
 
+        // Replace references of IDs
         links.forEach(function(e) {
           var sourceNode = nodes.filter(function(n) { return n.id === e.source; })[0],
               targetNode = nodes.filter(function(n) { return n.id === e.target; })[0];
-
           newLinks.push({source: sourceNode, target: targetNode});
         });
 
+
         links = newLinks;
+        force.nodes(nodes).links(links).start();
 
         // Draw Game Name
         var texts = svg.selectAll("text")
@@ -54,24 +70,11 @@
           .style("stroke", "#fff")
           .style("stroke-width", 3);
 
-        // Set Dynamic Force
-        var force = d3.layout.force()
-          .nodes(nodes)
-          .links(links)
-          .size([w,h])
-          .linkDistance([50])
-          .charge([-2500])
-          .gravity(0.3)
-          .start();
-
-        var drag = force.drag()
-        .on("dragstart", dragstart);
-
         // Draw Nodes
         var node = svg.selectAll(".node")
           .data(nodes)
           .enter()
-          .append("g")
+          .append('g')
           .attr('class', 'node')
           .call(drag);
 
@@ -94,10 +97,6 @@
           node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
           texts.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
         });
-
-        function dragstart(d) {
-          d3.select(this).classed("fixed", d.fixed = true);
-        }
       }
       </script>
 
