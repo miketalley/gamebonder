@@ -1,24 +1,17 @@
 <h1>Listing bonds</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @bonds.each do |bond| %>
-      <tr>
-        <td><%= bond.source.name %> - <%= bond.source.id %></td>
-        <td><%= bond.target.name %> - <%= bond.target.id %></td>
-        <td><%= link_to 'Show', bond %></td>
-        <td><%= link_to 'Edit', edit_bond_path(bond) %></td>
-        <td><%= link_to 'Destroy', bond, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% @bonds.each do |bond| %>
+  <div class='row'>
+    <div class='col-md-3'><%= bond.source.name || 'Undefined' %></div>
+    <div class='col-md-1'><%= bond.source.id || 'Undefined' %></div>
+    <div class='col-md-3'><%= bond.target.name || 'Undefined' %></div>
+    <div class='col-md-1'><%= bond.target.id || 'Undefined' %></div>
+    <div class='col-md-4'><%= link_to 'Show', bond %> |
+        <%= link_to 'Edit', edit_bond_path(bond) %> |
+        <%= link_to 'Destroy', bond, method: :delete, data: { confirm: 'Are you sure?' } %>
+    </div>
+  </div>
+<% end %>
 
 <br>
 
