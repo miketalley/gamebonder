@@ -10,6 +10,8 @@
   <tbody>
     <% @bonds.each do |bond| %>
       <tr>
+        <td><%= bond.source.name %> - <%= bond.source.id %></td>
+        <td><%= bond.target.name %> - <%= bond.target.id %></td>
         <td><%= link_to 'Show', bond %></td>
         <td><%= link_to 'Edit', edit_bond_path(bond) %></td>
         <td><%= link_to 'Destroy', bond, method: :delete, data: { confirm: 'Are you sure?' } %></td>
