@@ -2,11 +2,7 @@
 
 <% @bonds.each do |bond| %>
   <div class='row'>
-    <div class='col-md-1'><%= bond.id %></div>
-    <div class='col-md-3'><% if !bond.source.name.nil? %><%= bond.source.name %><% end %></div>
-    <div class='col-md-1'><% if !bond.source.id.nil? %><%= bond.source.id %><% end %></div>
-    <div class='col-md-3'><% if !bond.target.name.nil? %><%= bond.target.name %><% end %></div>
-    <div class='col-md-1'><% if !bond.target.id.nil? %><%= bond.target.id %><% end %></div>
+    <div class='col-md-1'><%= bond.id %><%= bond.inspect %></div>
     <div class='col-md-3'><%= link_to 'Show', bond %> |
         <%= link_to 'Edit', edit_bond_path(bond) %> |
         <%= link_to 'Destroy', bond, method: :delete, data: { confirm: 'Are you sure?' } %>
