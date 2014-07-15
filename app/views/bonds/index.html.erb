@@ -2,10 +2,10 @@
 
 <% @bonds.each do |bond| %>
   <div class='row'>
-    <div class='col-md-3'><%= bond.source.name || 'Undefined' %></div>
-    <div class='col-md-1'><%= bond.source.id || 'Undefined' %></div>
-    <div class='col-md-3'><%= bond.target.name || 'Undefined' %></div>
-    <div class='col-md-1'><%= bond.target.id || 'Undefined' %></div>
+    <div class='col-md-3'><% if bond.source.name.present? %><%= bond.source.name %><% end %></div>
+    <div class='col-md-1'><% if bond.source.id.present? %><%= bond.source.id %><% end %></div>
+    <div class='col-md-3'><% if bond.target.name.present? %><%= bond.target.name %><% end %></div>
+    <div class='col-md-1'><% if bond.target.id.present? %><%= bond.target.id %><% end %></div>
     <div class='col-md-4'><%= link_to 'Show', bond %> |
         <%= link_to 'Edit', edit_bond_path(bond) %> |
         <%= link_to 'Destroy', bond, method: :delete, data: { confirm: 'Are you sure?' } %>
