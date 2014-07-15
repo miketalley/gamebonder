@@ -49,8 +49,18 @@
           newLinks.push({source: sourceNode, target: targetNode});
         });
 
-
         links = newLinks;
+
+        var numberOfNodeLinks = function(game){
+          return links.filter(function(p){
+            return (p.source.id === game.id || p.target.id === game.id); });
+        };
+
+        for(var i = 0; i < nodes.length; i++){
+          nodes[i].weight = numberOfNodeLinks(nodes[i]).length;
+          console.log(nodes[i].name + ': ' + nodes[i].weight);
+        }
+
         force.nodes(nodes).links(links).start();
 
         // Draw Game Name
@@ -73,7 +83,7 @@
           .style("stroke-width", 3);
 
         // Draw Nodes
-        var node = svg.selectAll(".node")
+        node = svg.selectAll(".node")
           .data(nodes)
           .enter()
           .append('g')
@@ -98,7 +108,7 @@
             .attr("y2", function(d) { return d.target.y + 20; });
           node
             .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-            .attr("weight", 5); // function(d) { return ; });
+            .attr("weight", function(d) { return d.weight; });
           texts.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
         });
       }
