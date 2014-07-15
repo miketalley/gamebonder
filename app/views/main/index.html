@@ -55,7 +55,7 @@
 
         var numberOfNodeLinks = function(game){
           return links.filter(function(p){
-            return (p.source.id === game.id || p.target.id === game.id); });
+            return (p.source_id === game.id || p.target_id === game.id); });
         };
 
         for(var i = 0; i < nodes.length; i++){
