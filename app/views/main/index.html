@@ -44,18 +44,18 @@
 
         // Replace references of IDs
         links.forEach(function(e) {
-          var sourceNode = nodes.filter(function(n) { return n.id === e.source_id; })[0],
-              targetNode = nodes.filter(function(n) { return n.id === e.target_id; })[0];
+          var sourceNode = nodes.filter(function(n) { return n.id === e.source; })[0],
+              targetNode = nodes.filter(function(n) { return n.id === e.target; })[0];
 
-          newLinks.push({source: sourceNode.id, target: targetNode.id});
-          console.log('Pushing newLinks: ' + sourceNode.id + ' : ' + targetNode.id);
+          newLinks.push({source: sourceNode, target: targetNode});
+          console.log('Pushing newLinks: ' + sourceNode + ' : ' + targetNode);
         });
 
         links = newLinks;
 
         var numberOfNodeLinks = function(game){
           return links.filter(function(p){
-            return (p.source_id === game.id || p.target_id === game.id); });
+            return (p.source.id === game.id || p.target.id === game.id); });
         };
 
         for(var i = 0; i < nodes.length; i++){
