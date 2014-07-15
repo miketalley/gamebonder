@@ -1,101 +1,22 @@
 <h1>Listing bonds</h1>
 
-<script>
-  /* Set the diagrams Height & Width */
-  var h = 700, w = 1050;
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
 
-  /* Set the color scale we want to use */
-  var color = d3.scale.category20();
-
-  /* Establish/instantiate an SVG container object */
-  var svg = d3.select("body")
-    .append("svg")
-    .attr("height",h)
-    .attr("width",w);
-
-  /* Pre-Load the json data using the queue library */
-  queue()
-  // Links
-  .defer(d3.json, "../games.json")
-  .defer(d3.json, "../bonds.json")
-  // Nodes
-
-  .await(makeDiag);
-
-/* Define the main worker or execution function */
-function makeDiag(error, nodes, links, table) {
-  var newLinks = [];
-  links.forEach(function(e) {
-    // Get the source and target nodes
-    var sourceNode = nodes.filter(function(n) { return n.id === e.source; })[0],
-        targetNode = nodes.filter(function(n) { return n.id === e.target; })[0];
-
-    // Add the edge to the array
-    newLinks.push({source: sourceNode, target: targetNode});
-  });
-  links = newLinks;
-
-  /* Draw the node labels first */
-  var texts = svg.selectAll("text")
-    .data(nodes)
-    .enter()
-    .append("text")
-    .attr("fill", "black")
-    .attr("font-family", "sans-serif")
-    .attr("font-size", "10px")
-    .attr('class', 'txts')
-    .text(function(d) { return d.name; });
-
-  /* Establish the dynamic force behavor of the nodes */
-  var force = d3.layout.force()
-    .nodes(nodes)
-    .links(links)
-    .size([w,h])
-    .linkDistance([150])
-    .charge([-2500])
-    .gravity(0.3)
-    .start();
-
-  /* Draw the edges/links between the nodes */
-  var edges = svg.selectAll("line")
-    .data(links)
-    .enter()
-    .append("line")
-    .style("stroke", "#000")
-    .style("stroke-width", 3)
-    .attr("marker-end", "url(#end)");
-
-
-  /* Draw the nodes themselves */
-  var node = svg.selectAll(".node")
-    .data(nodes)
-    .enter()
-    .append("g")
-    .attr('class', 'node')
-    .call(force.drag);
-
-  node.append('image')
-    .attr("xlink:href", function(d){ return d.thumb_url; })
-    .attr("x", 0)
-    .attr("y", 5)
-    .attr("width", 50)
-    .attr("height", 50);
-
-  /* Run the Force effect */
-  force.on("tick", function() {
-    edges
-      .attr("x1", function(d) { return d.source.x + 20; })
-      .attr("y1", function(d) { return d.source.y + 20; })
-      .attr("x2", function(d) { return d.target.x + 20; })
-      .attr("y2", function(d) { return d.target.y + 20; });
-    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-    texts.attr("transform", function(d) {
-      return "translate(" + d.x + "," + d.y + ")";
-    });
-  }); // End tick func
-} // End makeDiag worker func
-
-</script>
+  <tbody>
+    <% @bonds.each do |bond| %>
+      <tr>
+        <td><%= link_to 'Show', bond %></td>
+        <td><%= link_to 'Edit', edit_bond_path(bond) %></td>
+        <td><%= link_to 'Destroy', bond, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <br>
 

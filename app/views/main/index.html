@@ -46,7 +46,9 @@
         links.forEach(function(e) {
           var sourceNode = nodes.filter(function(n) { return n.id === e.source; })[0],
               targetNode = nodes.filter(function(n) { return n.id === e.target; })[0];
+
           newLinks.push({source: sourceNode, target: targetNode});
+          console.log('Pushing newLinks: ' + sourceNode.id + ' : ' + targetNode.id);
         });
 
         links = newLinks;
