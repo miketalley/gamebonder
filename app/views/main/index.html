@@ -47,7 +47,7 @@
           var sourceNode = nodes.filter(function(n) { return n.id === e.source_id; })[0],
               targetNode = nodes.filter(function(n) { return n.id === e.target_id; })[0];
 
-          newLinks.push({source: sourceNode, target: targetNode});
+          newLinks.push({source: sourceNode.id, target: targetNode.id});
           console.log('Pushing newLinks: ' + sourceNode.id + ' : ' + targetNode.id);
         });
 

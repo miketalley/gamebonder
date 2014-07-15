@@ -1,0 +1,10 @@
+<div class='row'>
+  <div class='col-md-1'><%= bond.id %></div>
+  <div class='col-md-2'><%= bond.source_id %></div>
+  <div class='col-md-2'><%= bond.target_id %></div>
+  <div class='col-md-2'><%= bond.strength %></div>
+  <div class='col-md-5'><%= link_to 'Show', bond %> |
+        <%= link_to 'Edit', edit_bond_path(bond) %> |
+        <%= link_to 'Destroy', bond, method: :delete, data: { confirm: 'Are you sure?' } %>
+    </div>
+</div>
