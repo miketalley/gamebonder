@@ -98,7 +98,7 @@
             .attr("y2", function(d) { return d.target.y + 20; });
           node
             .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-            .attr("weight", function(d) { return d.weight; });
+            .attr("weight", 5); // function(d) { return ; });
           texts.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
         });
       }
