@@ -42,6 +42,10 @@
   border: 5px solid silver;
 }
 
+.reasons {
+  color: white;
+}
+
 body {
   background-color: black;
   color: silver;

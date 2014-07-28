@@ -1,3 +1,5 @@
+<div class='container'>
+<div class='reasons'>
 <h1>Listing reasons</h1>
 
 <table>
@@ -10,6 +12,9 @@
   <tbody>
     <% @reasons.each do |reason| %>
       <tr>
+        <td><%= reason.bond_id %></td>
+        <td><%= reason.description %></td>
+        <td><%= reason.strength %></td>
         <td><%= link_to 'Show', reason %></td>
         <td><%= link_to 'Edit', edit_reason_path(reason) %></td>
         <td><%= link_to 'Destroy', reason, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -21,3 +26,6 @@
 <br>
 
 <%= link_to 'New Reason', new_reason_path %>
+
+</div>
+</div>
