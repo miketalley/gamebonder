@@ -30,6 +30,18 @@
   color: white;
 }
 
+.bondItem {
+  margin: 7px;
+}
+
+.bondList {
+  position: absolute;
+  background-color: white;
+  padding: 7px;
+  color: black;
+  border: 5px solid silver;
+}
+
 body {
   background-color: black;
   color: silver;

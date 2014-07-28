@@ -7,16 +7,19 @@
       <h1 class='game-name'><%= @game.name %></h1>
       <h4>
       <dl>
-        <dt><a href ng-click='showBonds = !showBonds'><h3 class='game-name'><%= @game.bonds.count %> Bonds</h3></a></dt>
+        <dt><a href ng-click='showBonds = !showBonds'><h3 class='game-name'>
+            <span class="glyphicon glyphicon-th-list"></span>
+            <%= @game.bonds.count %> Bonds</h3></a>
+        </dt>
         <div class='bondList' ng-show='showBonds'>
           <% @game.bonds.each do |bond| %>
             <dd>
             <% if bond.source.name == @game.name %>
-              <a class='game-name' href='<%= bond.target.id %>'><%= bond.target.name %></a>
-              <ul><li>Strength: <%= bond.strength %></li></ul>
+              <a class='game-name bondItem' href='<%= bond.target.id %>'><%= bond.target.name %></a>
+              <ul class="list-group"><li class="list-group-item">Strength <%= bond.strength %></li></ul>
             <% else %>
-              <a class='game-name' href='<%= bond.target.id %>'><%= bond.source.name %></a>
-              <ul><li>Strength: <%= bond.strength %></li></ul>
+              <a class='game-name bondItem' href='<%= bond.target.id %>'><%= bond.source.name %></a>
+              <ul class="list-group"><li class="list-group-item">Strength <%= bond.strength %></li></ul>
             <% end %>
             </dd>
           <% end %>
