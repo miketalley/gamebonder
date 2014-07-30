@@ -29,8 +29,6 @@ GEM
       tzinfo (~> 1.1)
     angularjs-rails (1.2.18)
     arel (5.0.1.20140414130214)
-    bootstrap-sass (3.2.0.0)
-      sass (~> 3.2)
     builder (3.2.2)
     coderay (1.1.0)
     coffee-rails (4.0.1)
@@ -139,7 +137,6 @@ PLATFORMS
 
 DEPENDENCIES
   angularjs-rails
-  bootstrap-sass
   coffee-rails (~> 4.0.0)
   d3-rails
   jbuilder (~> 2.0)
