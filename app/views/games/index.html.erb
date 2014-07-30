@@ -3,7 +3,7 @@
     <h1></h1>
 
     <% @games.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |game| %>
-      <div class='row'>
+      <div class='row game-each ng-animate ng-enter'>
         <div class='col-md-2'>
           <img src='<%= game.icon_url %>'>
         </div>

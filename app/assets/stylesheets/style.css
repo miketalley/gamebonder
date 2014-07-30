@@ -63,6 +63,13 @@
   animation: bounceInLeft 1.5s;
 }
 
+.game-each.ng-enter {
+  -webkit-animation: zoomIn 1s;
+  -moz-animation: zoomIn 1s;
+  -ms-animation: zoomIn 1s;
+  animation: zoomIn 1s;
+}
+
 #sourceResults {
   height: 450px;
 }
