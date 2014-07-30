@@ -56,6 +56,13 @@
   transition-duration: 0;
 }
 
+.game-name.ng-enter {
+  -webkit-animation: bounceInLeft 1.5s;
+  -moz-animation: bounceInLeft 1.5s;
+  -ms-animation: bounceInLeft 1.5s;
+  animation: bounceInLeft 1.5s;
+}
+
 #sourceResults {
   height: 450px;
 }
