@@ -13,6 +13,7 @@ var gamesApp = angular.module('gamesApp', ['customFilters', 'ngAnimate'])
   };
 })
 .controller('GamesController', ['$scope', '$http', '$location', '$q', function($scope, $http, $location, $q){
+  $scope.showBonds = false;
   $scope.pageSize = 5;
 
   var getDB = function(tableToGet) {
