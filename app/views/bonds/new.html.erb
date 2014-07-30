@@ -4,7 +4,7 @@
     <h4>Know two alike games?</h4>
     <div class='row' id='source-target-search'>
       <!-- Source -->
-      <div ng-view class="col-md-6 slideup" ng-animate='slideup'>
+      <div class="col-md-6 slideup sourceSearch ng-animate ng-enter">
         <h3><span class='label label-primary'>This game...</span></h3>
         <div class='input-group'>
           <input type='text' class='form-control' ng-model='sourceSearch'ng-enter='searchList(sourceSearch, "source")'>
@@ -15,7 +15,7 @@
         <div ng-hide="sourceSelected" id='source-search'>
           <div id='sourceResults'>
             <h4 class='label'>Results:</h4>
-            <div ng-repeat="source in sourceList | startFrom: sourcePage * pageSize | limitTo: 5" class='search-results'>
+            <div ng-repeat="source in sourceList | startFrom: sourcePage * pageSize | limitTo: 5" class='search-results ng-animate ng-enter'>
               <div class='row result'>
                 <div class='col-md-2'>
                   <a href ng-click='selectSource(source)'><img src="{{source.image.icon_url}}" height='80' width='80'></a>
@@ -56,7 +56,7 @@
       </div>
 
       <!-- Target -->
-      <div ng-view class="col-md-6 slideup" ng-show='sourceSearched' ng-animate='slideup'>
+      <div ng-view class="col-md-6 slideup targetSearch ng-animate ng-enter" ng-show='sourceSearched'>
         <h3><span class='label label-primary'>...is like this one...</span></h3>
         <div class='input-group'>
           <input type='text' class='form-control' ng-model='targetSearch' ng-enter='searchList(targetSearch, "target")'>
@@ -67,7 +67,7 @@
         <div ng-hide="targetSelected" id='target-search'>
           <h4 class='label'>Results:</h4>
           <div id='targetResults'>
-            <div ng-repeat="target in targetList | startFrom: targetPage * pageSize | limitTo: 5">
+            <div ng-repeat="target in targetList | startFrom: targetPage * pageSize | limitTo: 5" class='search-results ng-animate ng-enter'>
               <div class='row result'>
                 <div class='col-md-2'>
                   <a href ng-click='selectTarget(target)'><img src='{{target.image.icon_url}}' height='80' width='80'></a>
@@ -108,7 +108,7 @@
       </div>
     </div>
 
-    <div class='row' ng-show='targetSearched' ng-animate="slideup">
+    <div class='row reasonPanel ng-animate ng-enter' ng-show='targetSearched'>
       <div class='col-md-8' id='because-search'>
         <h3><span class='label label-primary'>...because...</span></h3>
         <div class='input-group'>
