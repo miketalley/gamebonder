@@ -36,6 +36,10 @@ export default (props) => {
     //     .attr("width", 50)
     //     .attr("height", 50);
 
+    const openLink = (d) => {
+      console.log('Open Link: ', d);
+    };
+
     const svg = d3.create('svg').attr('viewBox', [0, 0, width, height]),
       link = svg
         .selectAll('.link')
@@ -48,14 +52,14 @@ export default (props) => {
         .join('g')
         .classed('node', true)
         .classed('fixed', (d) => d.fx !== undefined);
+    // .attr('ondblclick', function (d) {
+    //   return openLink(d);
+    // });
 
     node
       .append('svg:image')
       .attr('xlink:href', function (d) {
         return d.thumb_url;
-      })
-      .attr('ondblclick', function (d) {
-        return "openLink('/games/" + d.id + "')";
       })
       .attr('x', (n) => {
         return n.cx;
@@ -82,6 +86,7 @@ export default (props) => {
     const drag = d3.drag().on('start', dragstart).on('drag', dragged);
 
     node.call(drag).on('click', click);
+    node.call(drag).on('dblclick', (e, d) => openLink(d));
 
     function tick() {
       link
