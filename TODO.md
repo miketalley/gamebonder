@@ -1,0 +1,3 @@
+- Set up node backend
+- Get mongo DB working with BE
+- Set up react frontend
