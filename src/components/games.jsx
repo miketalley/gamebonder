@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import bondsMock from '../data/bonds-mock1.json';
+import gamesMock from '../data/games-mock1.json';
 
 export default (props) => {
   useEffect(() => {
@@ -31,15 +33,16 @@ export default (props) => {
     }
 
     // Getting data for nodes and links
-    queue()
-      .defer(d3.json, "../games.json")
-      .defer(d3.json, "../bonds.json")
-      .await(update);
+    // queue()
+    //   .defer(d3.json, "../games.json")
+    //   .defer(d3.json, "../bonds.json")
+    //   .await(update);
+    update();
 
     function update(error, games, bonds) {
       // TODO - Mock games and bonds here
-      games = [];
-      bonds = [];
+      games = gamesMock;
+      bonds = bondsMock;
       
       console.log('Games: ' + games.length);
       console.log('Bonds: ' + bonds.length);
@@ -60,7 +63,12 @@ export default (props) => {
 
       var numberOfNodeLinks = function(game){
         return links.filter(function(p){
-          return (p.source.id === game.id || p.target.id === game.id); });
+          if (!p.source || !p.target) {
+            console.log('Missing Data: ', p);
+            return;
+          }
+          return (p.source.id === game.id || p.target.id === game.id);
+        });
       };
 
       for(var i = 0; i < nodes.length; i++){
@@ -68,6 +76,8 @@ export default (props) => {
         console.log(nodes[i].name + ': ' + nodes[i].weight);
       }
 
+      console.log('Nodes: ', nodes, nodes.filter(n => !n || !n.weight));
+      console.log('Links: ', links);
       force.nodes(nodes).links(links).start();
 
       // Draw Game Name

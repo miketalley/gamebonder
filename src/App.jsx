@@ -1,4 +1,5 @@
 import './App.css'
+import './css/style.css'
 import GamesForceChart from './components/games.jsx';
 
 function App() {
