@@ -1,12 +1,4 @@
-/*#source-search-buttons {
-  position: absolute;
-}
-
-#target-search-buttons {
-  position: absolute;
-}*/
-
-#nav-spacer{
+#nav-spacer {
   height: 50px;
 }
 
@@ -105,20 +97,36 @@
 body {
   background-color: black;
   color: silver;
-  /*overflow: hidden;*/
+  overflow: hidden;
 }
 
 input {
   color: black;
 }
 
-link {
+/* link {
   color: white;
-}
+} */
 
 .panel {
   color: black;
   padding: 20px;
   font-size: 16px;
   margin: 25px;
+}
+
+.link {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+.node {
+  cursor: move;
+  fill: #ccc;
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.node.fixed {
+  fill: #f00;
 }
