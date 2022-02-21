@@ -2,40 +2,11 @@ import { useEffect } from 'react';
 import bondsMock from '../data/bonds-mock1.json';
 import gamesMock from '../data/games-mock1.json';
 import * as d3 from 'd3';
-import { forceSimulation } from 'd3-force';
 const width = 500;
 const height = Math.min(500, width * 0.6);
 
 export default (props) => {
   useEffect(() => {
-    //   // Draw Game Name
-    //   var texts = svg.selectAll("text")
-    //     .data(nodes)
-    //     .enter()
-    //     .append("text")
-    //     .attr("fill", "white")
-    //     .attr("font-family", "sans-serif")
-    //     .attr("font-size", "10px")
-    //     .attr('class', 'text')
-    //     .text(function(d) { return d.name; });
-
-    //   // Draw Nodes
-    //   // node = svg.selectAll(".node")
-    //   //   .data(nodes)
-    //   //   .enter()
-    //   //   .append('g')
-    //   //   .attr('class', 'node')
-    //   //   .call(drag);
-
-    //   // Append Images to Nodes
-    //   node.append('image')
-    //     .attr("xlink:href", function(d){ return d.thumb_url; })
-    //     .attr('ondblclick', function(d){ return "openLink('/games/" + d.id + "')"; })
-    //     .attr("x", 0)
-    //     .attr("y", 5)
-    //     .attr("width", 50)
-    //     .attr("height", 50);
-
     const openLink = (d) => {
       console.log('Open Link: ', d);
     };
@@ -52,9 +23,6 @@ export default (props) => {
         .join('g')
         .classed('node', true)
         .classed('fixed', (d) => d.fx !== undefined);
-    // .attr('ondblclick', function (d) {
-    //   return openLink(d);
-    // });
 
     node
       .append('svg:image')
@@ -69,6 +37,16 @@ export default (props) => {
       })
       .attr('width', 50)
       .attr('height', 50);
+
+    node
+      .append('text')
+      .attr('fill', 'white')
+      .attr('font-family', 'sans-serif')
+      .attr('font-size', '10px')
+      .attr('class', 'text')
+      .text(function (d) {
+        return d.name;
+      });
 
     d3.select('#games-force-chart-target').node().append(svg.node());
 
@@ -103,7 +81,6 @@ export default (props) => {
         .attr('weight', function (d) {
           return d.weight;
         });
-      //     texts.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
     }
 
     function click(event, d) {

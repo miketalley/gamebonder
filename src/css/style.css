@@ -1,130 +1,18 @@
-#nav-spacer {
-  height: 50px;
-}
-
-#source-target-search {
-  height: 600px;
-}
-
-.sourceSearch.ng-enter {
-  -webkit-animation: bounceInUp 2s;
-  -moz-animation: bounceInUp 2s;
-  -ms-animation: bounceInUp 2s;
-  animation: bounceInUp 2s;
-}
-
-.targetSearch.ng-enter {
-  -webkit-animation: bounceInRight 2s;
-  -moz-animation: bounceInRight 2s;
-  -ms-animation: bounceInRight 2s;
-  animation: bounceInRight 2s;
-}
-
-.reasonPanel.ng-enter {
-  -webkit-animation: bounceInDown 3s;
-  -moz-animation: bounceInDown 3s;
-  -ms-animation: bounceInDown 3s;
-  animation: bounceInDown 3s;
-}
-
-.navbar.ng-enter {
-  -webkit-animation: fadeInRightBig 1s;
-  -moz-animation: fadeInRightBig 1s;
-  -ms-animation: fadeInRightBig 1s;
-  animation: fadeInRightBig 1s;
-}
-
-.search-results.ng-enter {
-  -webkit-animation: zoomIn 1s;
-  -moz-animation: zoomIn 1s;
-  -ms-animation: zoomIn 1s;
-  animation: zoomIn 1s;
-}
-
-.search-results.ng-enter-stagger {
-  -webkit-transition-delay: 10s;
-  transition-delay: 10s;
-  -webkit-transition-duration: 0;
-  transition-duration: 0;
-}
-
-.game-name.ng-enter {
-  -webkit-animation: bounceInLeft 1.5s;
-  -moz-animation: bounceInLeft 1.5s;
-  -ms-animation: bounceInLeft 1.5s;
-  animation: bounceInLeft 1.5s;
-}
-
-.game-each.ng-enter {
-  -webkit-animation: zoomIn 1s;
-  -moz-animation: zoomIn 1s;
-  -ms-animation: zoomIn 1s;
-  animation: zoomIn 1s;
-}
-
-#sourceResults {
-  height: 450px;
-}
-
-#targetResults {
-  height: 450px;
-}
-
-.selected-game {
-  height: 350px;
-}
-
-.game-name {
-  color: white;
-}
-
-.bondItem {
-  margin: 7px;
-}
-
-.bondList {
-  position: absolute;
-  background-color: white;
-  padding: 7px;
-  color: black;
-  border: 5px solid silver;
-}
-
-.reasons {
-  color: white;
-}
-
 body {
   background-color: black;
   color: silver;
   overflow: hidden;
 }
 
-input {
-  color: black;
-}
-
-/* link {
-  color: white;
-} */
-
-.panel {
-  color: black;
-  padding: 20px;
-  font-size: 16px;
-  margin: 25px;
-}
-
 .link {
   stroke: #fff;
-  stroke-width: 1.5px;
+  stroke-width: 1.2px;
 }
 
 .node {
   cursor: move;
-  fill: #ccc;
-  stroke: #000;
-  stroke-width: 1.5px;
+  stroke: #fff;
+  stroke-width: 1px;
 }
 
 .node.fixed {
