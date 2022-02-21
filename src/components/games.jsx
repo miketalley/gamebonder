@@ -45,10 +45,26 @@ export default (props) => {
       node = svg
         .selectAll('.node')
         .data(gamesMock)
-        .join('circle')
-        .attr('r', 12)
+        .join('g')
         .classed('node', true)
         .classed('fixed', (d) => d.fx !== undefined);
+
+    node
+      .append('svg:image')
+      .attr('xlink:href', function (d) {
+        return d.thumb_url;
+      })
+      .attr('ondblclick', function (d) {
+        return "openLink('/games/" + d.id + "')";
+      })
+      .attr('x', (n) => {
+        return n.cx;
+      })
+      .attr('y', (n) => {
+        return n.cy;
+      })
+      .attr('width', 50)
+      .attr('height', 50);
 
     d3.select('#games-force-chart-target').node().append(svg.node());
 
@@ -74,9 +90,11 @@ export default (props) => {
         .attr('x2', (d) => d.target.x)
         .attr('y2', (d) => d.target.y);
       node
-        .attr('cx', (d) => d.x)
-        .attr('cy', (d) => d.y)
-        // .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+        .attr('cx', (d) => d.cx)
+        .attr('cy', (d) => d.cy)
+        .attr('transform', function (d) {
+          return 'translate(' + (d.x - 25) + ',' + (d.y - 25) + ')';
+        })
         .attr('weight', function (d) {
           return d.weight;
         });
